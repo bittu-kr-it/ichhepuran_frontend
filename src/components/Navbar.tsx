@@ -2,20 +2,24 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { Menu, X } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+import { Leaf, Menu, X } from "lucide-react";
 import type { SiteSettings } from "@/lib/types";
+import Button from "@/components/ui/Button";
 
 export default function Navbar({ settings }: { settings: SiteSettings }) {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-black/5">
+    <header className="sticky top-0 z-50 border-b border-black/5 bg-white/95 shadow-sm backdrop-blur">
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-16">
-        <Link
-          href="/"
-          className="font-display text-2xl font-semibold text-forest"
-        >
-          {settings.orgName}
+        <Link href="/" className="flex items-center gap-2">
+          <span className="flex h-9 w-9 items-center justify-center rounded-full bg-forest/10">
+            <Leaf className="h-5 w-5 text-forest" strokeWidth={2} />
+          </span>
+          <span className="font-display text-2xl font-semibold text-forest">
+            {settings.orgName}
+          </span>
         </Link>
 
         <ul className="hidden items-center gap-9 md:flex">
@@ -23,20 +27,22 @@ export default function Navbar({ settings }: { settings: SiteSettings }) {
             <li key={link.href}>
               <Link
                 href={link.href}
-                className="text-[15px] font-medium text-charcoal transition-colors hover:text-forest"
+                className="group relative text-[15px] font-medium text-charcoal transition-colors hover:text-forest"
               >
                 {link.label}
+                <span className="absolute -bottom-1 left-0 h-0.5 w-0 bg-mustard transition-all duration-300 group-hover:w-full" />
               </Link>
             </li>
           ))}
         </ul>
 
-        <Link
+        <Button
           href={settings.donateHref}
-          className="hidden rounded-full bg-mustard px-6 py-2.5 text-sm font-semibold text-charcoal transition-transform hover:scale-[1.03] md:inline-block"
+          size="sm"
+          className="hidden md:inline-block"
         >
           Donate Now
-        </Link>
+        </Button>
 
         <button
           type="button"
@@ -49,29 +55,36 @@ export default function Navbar({ settings }: { settings: SiteSettings }) {
         </button>
       </nav>
 
-      {open && (
-        <div className="border-t border-black/5 px-6 py-4 md:hidden">
-          <ul className="flex flex-col gap-4">
-            {settings.navLinks.map((link) => (
-              <li key={link.href}>
-                <Link
-                  href={link.href}
-                  className="block text-[15px] font-medium text-charcoal"
-                  onClick={() => setOpen(false)}
-                >
-                  {link.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-          <Link
-            href={settings.donateHref}
-            className="mt-4 block rounded-full bg-mustard px-6 py-2.5 text-center text-sm font-semibold text-charcoal"
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.25, ease: "easeInOut" }}
+            className="overflow-hidden border-t border-black/5 md:hidden"
           >
-            Donate Now
-          </Link>
-        </div>
-      )}
+            <div className="px-6 py-4">
+              <ul className="flex flex-col gap-4">
+                {settings.navLinks.map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      className="block text-[15px] font-medium text-charcoal"
+                      onClick={() => setOpen(false)}
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+              <Button href={settings.donateHref} size="sm" className="mt-4 block">
+                Donate Now
+              </Button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 }

@@ -60,9 +60,16 @@ export interface Testimonial {
   order: number;
 }
 
-export interface HomePageContent {
-  hero: HeroContent;
-  impactStats: ImpactStat[];
-  pillars: Pillar[];
-  testimonials: Testimonial[];
+export interface CtaContent {
+  heading: string;
+  subheading: string;
+  primaryCtaLabel: string;
+  primaryCtaHref: string;
+  secondaryCtaLabel: string;
+  secondaryCtaHref: string;
+}
+
+export interface SectionHeading {
+  eyebrow: string;
+  heading: string;
 }

@@ -1,25 +1,36 @@
-import Link from "next/link";
+import { ChevronDown } from "lucide-react";
 import type { HeroContent } from "@/lib/types";
+import Button from "@/components/ui/Button";
+import Eyebrow from "@/components/ui/Eyebrow";
+import Reveal from "@/components/ui/Reveal";
 
 export default function Hero({ content }: { content: HeroContent }) {
   return (
-    <section className="relative isolate flex min-h-[640px] items-center overflow-hidden bg-sage">
+    <section className="relative isolate flex min-h-[720px] items-center overflow-hidden bg-sage">
       {/* Background photo — swapped for real project photography once available */}
       <div
         className="absolute inset-0 bg-cover bg-center"
         style={{ backgroundImage: `url(${content.backgroundImage})` }}
         aria-hidden
       />
-      {/* Dark green overlay so white text stays readable over any photo */}
-      <div className="absolute inset-0 bg-forest-dark/60" aria-hidden />
+      {/* Layered gradient overlay — reads richer than a flat tint and keeps
+          text legible over any photo, darkest toward the text side */}
+      <div
+        className="absolute inset-0 bg-gradient-to-r from-forest-dark/85 via-forest-dark/60 to-forest-dark/30"
+        aria-hidden
+      />
+      <div
+        className="absolute inset-0 bg-gradient-to-t from-forest-dark/70 via-transparent to-transparent"
+        aria-hidden
+      />
 
-      <div className="relative mx-auto max-w-7xl px-6 py-24 lg:px-16">
-        <div className="max-w-2xl">
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-mustard">
+      <div className="relative mx-auto w-full max-w-7xl px-6 py-24 lg:px-16">
+        <Reveal className="max-w-2xl">
+          <Eyebrow color="mustard" variant="badge">
             {content.eyebrow}
-          </p>
+          </Eyebrow>
 
-          <h1 className="mt-5 whitespace-pre-line font-display text-5xl font-black leading-[1.08] text-white lg:text-6xl">
+          <h1 className="mt-6 whitespace-pre-line font-display text-5xl font-black leading-[1.08] text-white lg:text-7xl">
             {content.headline}
           </h1>
 
@@ -27,21 +38,18 @@ export default function Hero({ content }: { content: HeroContent }) {
             {content.subheading}
           </p>
 
-          <div className="mt-9 flex flex-wrap gap-4">
-            <Link
-              href={content.primaryCtaHref}
-              className="rounded-full bg-mustard px-8 py-4 text-[15px] font-semibold text-charcoal shadow-lg shadow-black/10 transition-transform hover:scale-[1.03]"
-            >
-              {content.primaryCtaLabel}
-            </Link>
-            <Link
-              href={content.secondaryCtaHref}
-              className="rounded-full border border-white/70 px-8 py-4 text-[15px] font-semibold text-white transition-colors hover:bg-white/10"
-            >
+          <div className="mt-10 flex flex-wrap gap-4">
+            <Button href={content.primaryCtaHref}>{content.primaryCtaLabel}</Button>
+            <Button href={content.secondaryCtaHref} variant="secondary">
               {content.secondaryCtaLabel}
-            </Link>
+            </Button>
           </div>
-        </div>
+        </Reveal>
+      </div>
+
+      <div className="absolute bottom-8 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-1 text-white/60 sm:flex">
+        <span className="text-xs font-medium uppercase tracking-[0.2em]">Scroll</span>
+        <ChevronDown className="h-4 w-4 animate-bounce" strokeWidth={1.75} />
       </div>
     </section>
   );
