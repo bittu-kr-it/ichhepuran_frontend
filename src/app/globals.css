@@ -1,0 +1,45 @@
+@import "tailwindcss";
+
+:root {
+  --color-forest: #1f5d42;
+  --color-forest-dark: #123828;
+  --color-sage: #86a789;
+  --color-mustard: #e9b949;
+  --color-mustard-dark: #c99a2e;
+  --color-cream: #f7f6f0;
+  --color-pale-green: #eaf2e8;
+  --color-charcoal: #24302a;
+  --color-charcoal-soft: #5a665e;
+  --color-white: #ffffff;
+}
+
+@theme inline {
+  --color-forest: var(--color-forest);
+  --color-forest-dark: var(--color-forest-dark);
+  --color-sage: var(--color-sage);
+  --color-mustard: var(--color-mustard);
+  --color-mustard-dark: var(--color-mustard-dark);
+  --color-cream: var(--color-cream);
+  --color-pale-green: var(--color-pale-green);
+  --color-charcoal: var(--color-charcoal);
+  --color-charcoal-soft: var(--color-charcoal-soft);
+
+  --font-display: var(--font-fraunces);
+  --font-body: var(--font-inter);
+}
+
+body {
+  background: var(--color-cream);
+  color: var(--color-charcoal);
+  font-family: var(--font-body), system-ui, sans-serif;
+}
+
+/* Respect reduced-motion preference site-wide */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
