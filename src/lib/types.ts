@@ -39,12 +39,23 @@ export interface ImpactStat {
   order: number;
 }
 
-export type PillarCategory = "environment" | "water" | "community";
+/**
+ * The category master for Initiatives — admin-managed (add/remove/reorder
+ * freely via the admin panel), not a fixed set. `color` is one of a small
+ * fixed set of approved design-token keys (see lib/categoryColors.ts),
+ * chosen from a dropdown in the admin, not a free color picker.
+ */
+export interface Category {
+  slug: string;
+  name: string;
+  color: string;
+  order: number;
+}
 
 export interface Pillar {
   id: string;
   title: string;
-  category: PillarCategory;
+  category: Category;
   summary: string;
   image: string;
   icon: string;
@@ -119,5 +130,26 @@ export interface TrustBadge {
   id: string;
   name: string;
   description: string;
+  order: number;
+}
+
+export interface InitiativesHeroContent {
+  headline: string;
+  subheading: string;
+}
+
+/**
+ * Fuller version of Pillar (which is Home's lean 3-featured-item shape) —
+ * used by the full Initiatives page listing. Same underlying backend
+ * model (Initiative), different API endpoint/shape: adds `body`.
+ */
+export interface Initiative {
+  id: string;
+  title: string;
+  category: Category;
+  summary: string;
+  body: string | null;
+  image: string | null;
+  icon: string;
   order: number;
 }

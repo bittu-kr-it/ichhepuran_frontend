@@ -1,4 +1,8 @@
-import type { CtaContent, HeroContent, ImpactStat, Pillar, SectionHeading, SiteSettings, Testimonial } from "../types";
+import type { Category, CtaContent, HeroContent, ImpactStat, Pillar, SectionHeading, SiteSettings, Testimonial } from "../types";
+
+const environmentCategory: Category = { slug: "environment", name: "Environment", color: "forest", order: 1 };
+const waterCategory: Category = { slug: "water", name: "Water", color: "sage", order: 2 };
+const communityCategory: Category = { slug: "community", name: "Community", color: "mustard", order: 3 };
 
 // This mock data exists ONLY so the frontend can be built and previewed
 // before the Laravel CMS API is live. Every value here maps 1:1 to a field
@@ -53,7 +57,7 @@ export const pillarsMock: Pillar[] = [
   {
     id: "tree-plantation",
     title: "Tree Plantation",
-    category: "environment",
+    category: environmentCategory,
     summary:
       "Restoring biodiversity by planting native species across degraded forest lands and urban centers.",
     image: "/images/pillar-tree-plantation.jpg",
@@ -63,7 +67,7 @@ export const pillarsMock: Pillar[] = [
   {
     id: "water-restoration",
     title: "Water Restoration",
-    category: "water",
+    category: waterCategory,
     summary:
       "Desilting ponds, harvesting rainwater, and ensuring sustainable clean water access for remote villages.",
     image: "/images/pillar-water-restoration.jpg",
@@ -73,7 +77,7 @@ export const pillarsMock: Pillar[] = [
   {
     id: "holistic-education",
     title: "Holistic Education",
-    category: "community",
+    category: communityCategory,
     summary:
       "Providing modern curriculum, digital literacy, and life skills training to bridge the urban-rural divide.",
     image: "/images/pillar-education.jpg",

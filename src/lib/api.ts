@@ -2,10 +2,13 @@ import type {
   AboutHeroContent,
   AboutIntroContent,
   AboutMilestone,
+  Category,
   CtaContent,
   GeographicReach,
   HeroContent,
   ImpactStat,
+  Initiative,
+  InitiativesHeroContent,
   Pillar,
   SectionHeading,
   SiteSettings,
@@ -136,4 +139,46 @@ export async function getTrustBadges(): Promise<TrustBadge[]> {
     return trustBadgesMock;
   }
   return fetchJson<TrustBadge[]>("/trust-badges");
+}
+
+export async function getInitiativesHero(): Promise<InitiativesHeroContent> {
+  if (!API_BASE) {
+    const { initiativesHeroMock } = await import("./content/initiatives.mock");
+    return initiativesHeroMock;
+  }
+  return fetchJson<InitiativesHeroContent>("/initiatives-hero");
+}
+
+export async function getInitiatives(): Promise<Initiative[]> {
+  if (!API_BASE) {
+    const { initiativesMock } = await import("./content/initiatives.mock");
+    return initiativesMock;
+  }
+  return fetchJson<Initiative[]>("/initiatives");
+}
+
+// Returns null on a genuine 404 (unknown slug) so the page can call
+// notFound() — distinct from fetchJson's generic "throw on any non-ok
+// response", since a missing initiative isn't an API failure.
+export async function getInitiative(slug: string): Promise<Initiative | null> {
+  if (!API_BASE) {
+    const { initiativesMock } = await import("./content/initiatives.mock");
+    return initiativesMock.find((initiative) => initiative.id === slug) ?? null;
+  }
+  const res = await fetch(`${API_BASE}/initiatives/${slug}`, {
+    next: { revalidate: 60 },
+  });
+  if (res.status === 404) return null;
+  if (!res.ok) {
+    throw new Error(`API request failed: /initiatives/${slug} (${res.status})`);
+  }
+  return res.json();
+}
+
+export async function getCategories(): Promise<Category[]> {
+  if (!API_BASE) {
+    const { categoriesMock } = await import("./content/initiatives.mock");
+    return categoriesMock;
+  }
+  return fetchJson<Category[]>("/categories");
 }

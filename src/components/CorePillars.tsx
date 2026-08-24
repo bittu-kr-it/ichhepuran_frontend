@@ -1,21 +1,11 @@
+import Link from "next/link";
 import * as Icons from "lucide-react";
 import type { LucideIcon } from "lucide-react";
-import type { Pillar, PillarCategory, SectionHeading } from "@/lib/types";
+import type { Pillar, SectionHeading } from "@/lib/types";
+import { getCategoryColorClasses } from "@/lib/categoryColors";
 import BlobAccent from "@/components/ui/BlobAccent";
 import Eyebrow from "@/components/ui/Eyebrow";
 import Reveal from "@/components/ui/Reveal";
-
-const categoryLabels: Record<PillarCategory, string> = {
-  environment: "Environment",
-  water: "Water",
-  community: "Community",
-};
-
-const categoryClasses: Record<PillarCategory, string> = {
-  environment: "bg-forest text-white",
-  water: "bg-sage text-forest-dark",
-  community: "bg-mustard text-charcoal",
-};
 
 export default function CorePillars({
   pillars,
@@ -45,7 +35,10 @@ export default function CorePillars({
               Icons.Sparkles) as LucideIcon;
             return (
               <Reveal key={pillar.id} delay={index * 0.1}>
-                <article className="group h-full overflow-hidden rounded-3xl bg-white shadow-sm ring-1 ring-charcoal/5 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+                <Link
+                  href={`/initiatives/${pillar.id}`}
+                  className="group block h-full overflow-hidden rounded-3xl bg-white shadow-sm ring-1 ring-charcoal/5 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
+                >
                   <div className="relative flex h-52 w-full items-center justify-center overflow-hidden bg-sage">
                     {pillar.image ? (
                       <div
@@ -56,9 +49,9 @@ export default function CorePillars({
                       <Icon className="h-16 w-16 text-white/40" strokeWidth={1.25} />
                     )}
                     <span
-                      className={`absolute left-4 top-4 rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wide ${categoryClasses[pillar.category]}`}
+                      className={`absolute left-4 top-4 rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wide ${getCategoryColorClasses(pillar.category.color)}`}
                     >
-                      {categoryLabels[pillar.category]}
+                      {pillar.category.name}
                     </span>
                     <span className="absolute -bottom-6 right-6 flex h-12 w-12 items-center justify-center rounded-2xl bg-white shadow-md ring-1 ring-charcoal/5">
                       <Icon className="h-6 w-6 text-forest" strokeWidth={1.75} />
@@ -76,7 +69,7 @@ export default function CorePillars({
                       <Icons.ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                     </span>
                   </div>
-                </article>
+                </Link>
               </Reveal>
             );
           })}

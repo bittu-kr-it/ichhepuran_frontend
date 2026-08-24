@@ -13,7 +13,9 @@ in here specifically.
 ## Stack
 Next.js 16, App Router, TypeScript, Tailwind CSS v4 (CSS-first config, no
 `tailwind.config.js` — theme lives in `src/app/globals.css` via `@theme`),
-Framer Motion, lucide-react, react-hook-form + zod.
+Framer Motion, lucide-react, react-hook-form + zod, `@tailwindcss/typography`
+(for rendering CMS RichEditor content — see the Initiatives detail page note
+below).
 
 ## The one pattern every page must follow
 
@@ -101,10 +103,51 @@ extracted to a shared util; extract it if a third page needs it) ·
 `TrustBadgesSection` (icon+name+description pills). Plus the shared
 `CtaBand`/`Footer` reused from Home.
 
-Every list-style section on both pages (`CorePillars`, `Testimonials`,
-`GeographicReachSection`, `JourneyTimeline`, `TeamGrid`, `TrustBadgesSection`)
-takes a `heading: SectionHeading` prop fetched via `getSectionHeading(key)` —
-the eyebrow+heading text is admin-editable but lives on the generic backend
+**Initiatives** (`src/app/initiatives/page.tsx`): `InitiativesHero` (same
+no-photo/no-CTA gradient pattern as `AboutHero`) · `InitiativesList` (groups
+the `Initiative[]` array by whichever `Category[]` the API returns, fully
+dynamic — fetched via `getCategories()` and passed in as a prop, sorted by
+`order`; NOT a fixed 3-item list anymore, see below). Plus the shared
+`CtaBand` reused from Home. Note: `Initiative` (this page's fuller type,
+has `body`) is a different type from `Pillar` (Home's lean 3-item type)
+even though both come from the same backend model — see `backend/CLAUDE.md`.
+
+**`Category` is admin-managed, not a hardcoded union type.** `PillarCategory`
+(a fixed `"environment" | "water" | "community"` union) is gone — `Pillar.category`
+and `Initiative.category` are now `Category` objects (`{slug, name, color, order}`)
+straight from the API. The hardcoded `categoryLabels`/`categoryClasses` maps
+that used to live separately in `CorePillars.tsx`, `InitiativesList.tsx`,
+and the initiative detail page are gone too, replaced by
+`lib/categoryColors.ts`'s `getCategoryColorClasses(color)` — a **static**
+lookup (Tailwind can't resolve a dynamically-constructed `bg-${color}`
+string at build time, the class names must appear literally in source) that
+must stay in sync with the backend's `CategoryResource::COLOR_OPTIONS` list.
+The category *name* needs no such lookup — render `category.name` directly,
+it's already the display text. If a new category is added in the admin
+panel, it appears everywhere automatically — no frontend code change needed
+unless its color uses a token not yet in `categoryColorClasses` (falls back
+to the forest style if so, doesn't crash).
+
+`src/app/initiatives/[slug]/page.tsx` — detail page per initiative, fetched
+via `getInitiative(slug)` (returns `null` on a genuine 404 so the page can
+call Next's `notFound()`, distinct from `fetchJson`'s generic
+throw-on-any-non-ok-response). Renders `initiative.body` — a Filament
+`RichEditor` field, i.e. real HTML — via `dangerouslySetInnerHTML` wrapped
+in Tailwind Typography's `prose` classes (added as a dependency
+specifically for this: `@tailwindcss/typography`, registered in
+`globals.css` via `@plugin "@tailwindcss/typography";`, Tailwind v4's
+CSS-first syntax, not a JS config file). **Never render CMS rich-text HTML
+as a plain string in JSX** (`{content.body}`) — it'll show raw tags to the
+user the moment an admin adds any formatting; this was already wrong once
+on `InitiativesList`'s cards before being caught and fixed. `body` is
+optional (`null` for initiatives that only have a short `summary`) —
+always guard the `prose` block on it being present.
+
+Every list-style section that pulls its title from the CMS (`CorePillars`,
+`Testimonials`, `GeographicReachSection`, `JourneyTimeline`, `TeamGrid`,
+`TrustBadgesSection` — but NOT `InitiativesList`, see above) takes a
+`heading: SectionHeading` prop fetched via `getSectionHeading(key)` — the
+eyebrow+heading text is admin-editable but lives on the generic backend
 `SectionHeading` model, not a field on the list items themselves. See
 `backend/CLAUDE.md`'s "List-style sections need a SectionHeading" section
 before adding a new list-style content type.
@@ -120,7 +163,7 @@ Twitter, LinkedIn, YouTube) entirely — `Footer`'s social links use a generic
 
 ## Not started yet
 
-Pages: Initiatives, Impact, Gallery, Get Involved, Contact. See the API
+Pages: Impact, Gallery, Get Involved, Contact. See the API
 table in `../docs/project-plan.md` for what each needs from the backend
 before it can be built without hardcoding, and `../docs/raw-site-content.md`
 for the real copy to seed instead of placeholder text. Impact page needs its
