@@ -54,6 +54,9 @@ export default function Button(props: ButtonProps) {
       type={props.type ?? "button"}
       onClick={props.onClick}
       disabled={props.disabled}
+      // Browser extensions inject attributes into form controls before
+      // React hydrates (see TextField.tsx's comment) — not an app bug.
+      suppressHydrationWarning
       className={`${classes} disabled:pointer-events-none disabled:opacity-50`}
     >
       {children}

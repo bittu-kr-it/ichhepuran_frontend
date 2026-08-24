@@ -15,6 +15,9 @@ const SelectField = forwardRef<
       <select
         ref={ref}
         defaultValue=""
+        // See TextField.tsx's comment — browser extensions injecting
+        // attributes before hydration, not an app bug.
+        suppressHydrationWarning
         className={`mt-2 w-full rounded-xl border bg-white px-4 py-3 text-[15px] text-charcoal outline-none transition-colors focus:border-forest ${
           error ? "border-red-400" : "border-charcoal/15"
         } ${className}`}

@@ -39,22 +39,27 @@ export default function CorePillars({
                   href={`/initiatives/${pillar.id}`}
                   className="group block h-full overflow-hidden rounded-3xl bg-white shadow-sm ring-1 ring-charcoal/5 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
                 >
-                  <div className="relative flex h-52 w-full items-center justify-center overflow-hidden bg-sage">
-                    {pillar.image ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img
-                        src={pillar.image}
-                        alt={pillar.imageAlt ?? pillar.title}
-                        className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
-                      />
-                    ) : (
-                      <Icon className="h-16 w-16 text-white/40" strokeWidth={1.25} />
-                    )}
-                    <span
-                      className={`absolute left-4 top-4 rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wide ${getCategoryColorClasses(pillar.category.color)}`}
-                    >
-                      {pillar.category.name}
-                    </span>
+                  <div className="relative">
+                    <div className="relative flex h-52 w-full items-center justify-center overflow-hidden bg-sage">
+                      {pillar.image ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={pillar.image}
+                          alt={pillar.imageAlt ?? pillar.title}
+                          className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                        />
+                      ) : (
+                        <Icon className="h-16 w-16 text-white/40" strokeWidth={1.25} />
+                      )}
+                      <span
+                        className={`absolute left-4 top-4 rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wide ${getCategoryColorClasses(pillar.category.color)}`}
+                      >
+                        {pillar.category.name}
+                      </span>
+                    </div>
+                    {/* Sits outside the image div's overflow-hidden (needed
+                        there for the hover-zoom clip) so this badge's
+                        intentional -bottom-6 overflow isn't clipped too. */}
                     <span className="absolute -bottom-6 right-6 flex h-12 w-12 items-center justify-center rounded-2xl bg-white shadow-md ring-1 ring-charcoal/5">
                       <Icon className="h-6 w-6 text-forest" strokeWidth={1.75} />
                     </span>

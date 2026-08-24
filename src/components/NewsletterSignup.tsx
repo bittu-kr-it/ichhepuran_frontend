@@ -35,11 +35,19 @@ export default function NewsletterSignup() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="you@example.com"
+          // Browser extensions (password managers, form-fillers) inject
+          // attributes like `fdprocessedid` into inputs before React
+          // hydrates, which React otherwise flags as a hydration mismatch —
+          // see https://react.dev/link/hydration-mismatch. Not something
+          // this app renders or controls. This field renders on every
+          // page (site-wide Footer), so it's the one most likely to hit it.
+          suppressHydrationWarning
           className="w-full rounded-full border border-white/20 bg-white/5 px-4 py-2 text-sm text-white placeholder:text-white/40 outline-none focus:border-mustard"
         />
         <button
           type="submit"
           disabled={status === "submitting"}
+          suppressHydrationWarning
           className="flex-none rounded-full bg-mustard px-4 py-2 text-sm font-semibold text-charcoal transition-transform hover:scale-105 disabled:pointer-events-none disabled:opacity-50"
         >
           {status === "submitting" ? "…" : "Join"}

@@ -13,17 +13,22 @@ function InitiativeCard({ item, index }: { item: Initiative; index: number }) {
         href={`/initiatives/${item.id}`}
         className="group block h-full overflow-hidden rounded-3xl bg-white shadow-sm ring-1 ring-charcoal/5 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
       >
-        <div className="relative flex h-44 w-full items-center justify-center overflow-hidden bg-sage">
-          {item.image ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={item.image}
-              alt={item.imageAlt ?? item.title}
-              className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
-            />
-          ) : (
-            <Icon className="h-14 w-14 text-white/40" strokeWidth={1.25} />
-          )}
+        <div className="relative">
+          <div className="relative flex h-44 w-full items-center justify-center overflow-hidden bg-sage">
+            {item.image ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={item.image}
+                alt={item.imageAlt ?? item.title}
+                className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+              />
+            ) : (
+              <Icon className="h-14 w-14 text-white/40" strokeWidth={1.25} />
+            )}
+          </div>
+          {/* Sits outside the image div's overflow-hidden (needed there
+              for the hover-zoom clip) so this badge's intentional
+              -bottom-6 overflow isn't clipped too. */}
           <span className="absolute -bottom-6 right-6 flex h-12 w-12 items-center justify-center rounded-2xl bg-white shadow-md ring-1 ring-charcoal/5">
             <Icon className="h-6 w-6 text-forest" strokeWidth={1.75} />
           </span>

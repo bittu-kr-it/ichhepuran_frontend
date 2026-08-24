@@ -10,6 +10,9 @@ const TextareaField = forwardRef<
       <textarea
         ref={ref}
         rows={rows}
+        // See TextField.tsx's comment — browser extensions injecting
+        // attributes before hydration, not an app bug.
+        suppressHydrationWarning
         className={`mt-2 w-full rounded-xl border px-4 py-3 text-[15px] text-charcoal outline-none transition-colors placeholder:text-charcoal-soft/50 focus:border-forest ${
           error ? "border-red-400" : "border-charcoal/15"
         } ${className}`}

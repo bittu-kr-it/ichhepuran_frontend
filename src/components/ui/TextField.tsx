@@ -13,6 +13,12 @@ const TextField = forwardRef<
       <span className="text-sm font-semibold text-charcoal">{label}</span>
       <input
         ref={ref}
+        // Browser extensions (password managers, form-fillers) inject
+        // attributes like `fdprocessedid` into inputs before React
+        // hydrates, which React otherwise flags as a hydration mismatch —
+        // see https://react.dev/link/hydration-mismatch. Not something
+        // this app renders or controls.
+        suppressHydrationWarning
         className={`mt-2 w-full rounded-xl border px-4 py-3 text-[15px] text-charcoal outline-none transition-colors placeholder:text-charcoal-soft/50 focus:border-forest ${
           error ? "border-red-400" : "border-charcoal/15"
         } ${className}`}
