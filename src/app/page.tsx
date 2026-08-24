@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Hero from "@/components/Hero";
 import ImpactStats from "@/components/ImpactStats";
 import CorePillars from "@/components/CorePillars";
@@ -9,8 +10,25 @@ import {
   getImpactStats,
   getPillars,
   getSectionHeading,
+  getSeoSetting,
   getTestimonials,
 } from "@/lib/api";
+import { buildPageMetadata } from "@/lib/seo";
+
+// No fallbackTitle here — omitting it (unless the admin sets an override in
+// SEO Settings) lets the title inherit the root layout's own default rather
+// than repeating it, since Home's hero headline has a line break that isn't
+// title-shaped. Description comes from hero.subheading, already fetched
+// content, not a new hardcoded string.
+export async function generateMetadata(): Promise<Metadata> {
+  const [seo, hero] = await Promise.all([getSeoSetting("home"), getHero()]);
+  return buildPageMetadata({
+    seo,
+    path: "/",
+    fallbackDescription: hero.subheading,
+    fallbackImage: hero.backgroundImage,
+  });
+}
 
 // Server component — fetches from the Laravel CMS API at request/build time
 // once NEXT_PUBLIC_API_URL is configured (see src/lib/api.ts). Nothing on

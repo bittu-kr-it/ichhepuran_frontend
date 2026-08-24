@@ -28,6 +28,7 @@ export interface HeroContent {
   secondaryCtaLabel: string;
   secondaryCtaHref: string;
   backgroundImage: string; // media library asset URL once real photography exists
+  backgroundImageAlt?: string;
 }
 
 export interface ImpactStat {
@@ -58,6 +59,7 @@ export interface Pillar {
   category: Category;
   summary: string;
   image: string;
+  imageAlt?: string;
   icon: string;
   order: number;
 }
@@ -68,6 +70,7 @@ export interface Testimonial {
   name: string;
   role: string;
   photo?: string;
+  photoAlt?: string;
   order: number;
 }
 
@@ -84,6 +87,7 @@ export interface SectionHeading {
   eyebrow: string;
   heading: string;
   image?: string;
+  imageAlt?: string;
 }
 
 export interface AboutHeroContent {
@@ -98,6 +102,7 @@ export interface AboutIntroContent {
   vision: string;
   mission: string;
   originImage?: string;
+  originImageAlt?: string;
 }
 
 export interface GeographicReach {
@@ -114,6 +119,7 @@ export interface AboutMilestone {
   title: string;
   description: string;
   image?: string;
+  imageAlt?: string;
   order: number;
 }
 
@@ -123,6 +129,7 @@ export interface TeamMember {
   role: string;
   bio?: string;
   photo?: string;
+  photoAlt?: string;
   order: number;
 }
 
@@ -139,6 +146,25 @@ export interface InitiativesHeroContent {
 }
 
 /**
+ * Admin-editable SEO overrides for a top-level page (one per page, keyed by
+ * a fixed set of route keys — see lib/api.ts's getSeoSetting). Every field
+ * is optional: the frontend falls back to that page's own content-derived
+ * title/description/image whenever an override hasn't been set. Canonical
+ * URL is NOT part of this shape — it's generated on the frontend from the
+ * page's own route, never admin-editable (see lib/seo.ts).
+ */
+export interface SeoSetting {
+  metaTitle?: string | null;
+  metaDescription?: string | null;
+  ogTitle?: string | null;
+  ogDescription?: string | null;
+  ogImage?: string | null;
+  twitterTitle?: string | null;
+  twitterDescription?: string | null;
+  twitterImage?: string | null;
+}
+
+/**
  * Fuller version of Pillar (which is Home's lean 3-featured-item shape) —
  * used by the full Initiatives page listing. Same underlying backend
  * model (Initiative), different API endpoint/shape: adds `body`.
@@ -150,6 +176,7 @@ export interface Initiative {
   summary: string;
   body: string | null;
   image: string | null;
+  imageAlt?: string;
   icon: string;
   order: number;
 }

@@ -29,6 +29,7 @@ export const aboutIntroMock: AboutIntroContent = {
     "To create a world where every community thrives in harmony with a restored environment, where green canopies shelter every home and education is the birthright of every child.",
   mission:
     "To empower vulnerable coastal communities through climate-resilient livelihoods, education, and direct environmental stewardship.",
+  originImageAlt: "Cyclone relief volunteers distributing aid in the Sundarbans after Cyclone Yaas.",
 };
 
 export const geographicReachMock: GeographicReach[] = [
@@ -49,8 +50,8 @@ export const aboutMilestonesMock: AboutMilestone[] = [
 ];
 
 export const teamMembersMock: TeamMember[] = [
-  { id: "1", name: "Gargee Das Mondal", role: "Social Work", order: 1 },
-  { id: "2", name: "Netai Mondal", role: "Post Treasurer & Senior Operations Manager", order: 2 },
+  { id: "1", name: "Gargee Das Mondal", role: "Social Work", photoAlt: "Portrait of Gargee Das Mondal, Social Work.", order: 1 },
+  { id: "2", name: "Netai Mondal", role: "Post Treasurer & Senior Operations Manager", photoAlt: "Portrait of Netai Mondal, Post Treasurer & Senior Operations Manager.", order: 2 },
 ];
 
 export const trustBadgesMock: TrustBadge[] = [

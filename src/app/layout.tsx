@@ -21,8 +21,20 @@ const inter = localFont({
   display: "swap",
 });
 
+// `title.template` lets each page set just its own short title (e.g. "About")
+// and have "| Ichhe Puran" appended automatically — `default` is used for
+// Home, which doesn't override title/description (its own copy already
+// matches this closely). See src/app/about/page.tsx etc. for the pattern.
+// metadataBase lets every page's `alternates.canonical` (see lib/seo.ts) be
+// just a relative path ("/", "/about") — Next resolves the absolute
+// canonical URL from this automatically, which is what "auto-generated on
+// the frontend" means in practice: no canonical URL is ever stored in the CMS.
 export const metadata: Metadata = {
-  title: "Ichhe Puran | Restoring Earth, Empowering Communities",
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"),
+  title: {
+    template: "%s | Ichhe Puran",
+    default: "Ichhe Puran | Restoring Earth, Empowering Communities",
+  },
   description:
     "Ichhe Puran restores ecosystems and empowers coastal and rural communities across eastern India through reforestation, water conservation, and education.",
 };

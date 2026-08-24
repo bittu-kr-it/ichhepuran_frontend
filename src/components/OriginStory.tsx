@@ -9,9 +9,11 @@ export default function OriginStory({ content }: { content: AboutIntroContent })
         <div className="grid gap-14 lg:grid-cols-5 lg:gap-16">
           <Reveal className="lg:col-span-3">
             {content.originImage && (
-              <div
-                className="mb-8 h-72 w-full rounded-3xl bg-sage bg-cover bg-center shadow-sm"
-                style={{ backgroundImage: `url(${content.originImage})` }}
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={content.originImage}
+                alt={content.originImageAlt ?? content.originTitle}
+                className="mb-8 h-72 w-full rounded-3xl bg-sage object-cover shadow-sm"
               />
             )}
             <span className="inline-flex items-center gap-2 rounded-full bg-forest/10 px-4 py-1.5 text-sm font-semibold text-forest">

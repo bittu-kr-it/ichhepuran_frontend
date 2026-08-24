@@ -37,9 +37,11 @@ export default function TeamGrid({
             <Reveal key={member.id} delay={index * 0.1}>
               <div className="flex h-full flex-col items-center rounded-3xl bg-white p-8 text-center shadow-sm ring-1 ring-charcoal/5 transition-shadow hover:shadow-md">
                 {member.photo ? (
-                  <span
-                    className="h-24 w-24 flex-none rounded-full bg-cover bg-center ring-4 ring-mustard/30"
-                    style={{ backgroundImage: `url(${member.photo})` }}
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={member.photo}
+                    alt={member.photoAlt ?? member.name}
+                    className="h-24 w-24 flex-none rounded-full object-cover ring-4 ring-mustard/30"
                   />
                 ) : (
                   <span className="flex h-24 w-24 flex-none items-center justify-center rounded-full bg-forest text-2xl font-semibold text-white ring-4 ring-mustard/30">

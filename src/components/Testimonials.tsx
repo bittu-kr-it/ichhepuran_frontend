@@ -46,9 +46,11 @@ export default function Testimonials({
                 </blockquote>
                 <figcaption className="relative mt-6 flex items-center gap-3">
                   {item.photo ? (
-                    <span
-                      className="h-12 w-12 flex-none rounded-full bg-cover bg-center ring-2 ring-mustard/40"
-                      style={{ backgroundImage: `url(${item.photo})` }}
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={item.photo}
+                      alt={item.photoAlt ?? item.name}
+                      className="h-12 w-12 flex-none rounded-full object-cover ring-2 ring-mustard/40"
                     />
                   ) : (
                     <span className="flex h-12 w-12 flex-none items-center justify-center rounded-full bg-forest text-sm font-semibold text-white ring-2 ring-mustard/40">

@@ -37,9 +37,11 @@ export default function JourneyTimeline({
                   </span>
                   <div className="flex flex-1 flex-col gap-4 rounded-2xl bg-white p-6 shadow-sm ring-1 ring-charcoal/5 sm:flex-row sm:items-center">
                     {item.image && (
-                      <div
-                        className="h-40 w-full flex-none rounded-xl bg-sage bg-cover bg-center sm:h-24 sm:w-32"
-                        style={{ backgroundImage: `url(${item.image})` }}
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={item.image}
+                        alt={item.imageAlt ?? item.title}
+                        className="h-40 w-full flex-none rounded-xl bg-sage object-cover sm:h-24 sm:w-32"
                       />
                     )}
                     <div>

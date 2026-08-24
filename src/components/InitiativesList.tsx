@@ -15,9 +15,11 @@ function InitiativeCard({ item, index }: { item: Initiative; index: number }) {
       >
         <div className="relative flex h-44 w-full items-center justify-center overflow-hidden bg-sage">
           {item.image ? (
-            <div
-              className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
-              style={{ backgroundImage: `url(${item.image})` }}
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={item.image}
+              alt={item.imageAlt ?? item.title}
+              className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
             />
           ) : (
             <Icon className="h-14 w-14 text-white/40" strokeWidth={1.25} />

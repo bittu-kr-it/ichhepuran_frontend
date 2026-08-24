@@ -41,9 +41,11 @@ export default function CorePillars({
                 >
                   <div className="relative flex h-52 w-full items-center justify-center overflow-hidden bg-sage">
                     {pillar.image ? (
-                      <div
-                        className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
-                        style={{ backgroundImage: `url(${pillar.image})` }}
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={pillar.image}
+                        alt={pillar.imageAlt ?? pillar.title}
+                        className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
                       />
                     ) : (
                       <Icon className="h-16 w-16 text-white/40" strokeWidth={1.25} />

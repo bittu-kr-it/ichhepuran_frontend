@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import * as Icons from "lucide-react";
@@ -7,6 +8,32 @@ import { getCategoryColorClasses } from "@/lib/categoryColors";
 import CtaBand from "@/components/CtaBand";
 import Reveal from "@/components/ui/Reveal";
 import { getCta, getInitiative } from "@/lib/api";
+
+// Genuinely unique per-initiative metadata (title, description, and a real
+// social-share image when one's been uploaded) — the highest-value case for
+// SEO here, since these 9+ pages would otherwise all share one generic title.
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const initiative = await getInitiative(slug);
+
+  if (!initiative) {
+    return { title: "Initiative Not Found" };
+  }
+
+  return {
+    title: initiative.title,
+    description: initiative.summary,
+    openGraph: {
+      title: initiative.title,
+      description: initiative.summary,
+      images: initiative.image ? [{ url: initiative.image }] : undefined,
+    },
+  };
+}
 
 export default async function InitiativeDetail({
   params,
@@ -26,10 +53,11 @@ export default async function InitiativeDetail({
     <main>
       <section className="relative isolate flex min-h-[380px] items-end overflow-hidden bg-sage">
         {initiative.image ? (
-          <div
-            className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: `url(${initiative.image})` }}
-            aria-hidden
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={initiative.image}
+            alt={initiative.imageAlt ?? initiative.title}
+            className="absolute inset-0 h-full w-full object-cover"
           />
         ) : (
           <div className="absolute inset-0 flex items-center justify-center bg-forest">

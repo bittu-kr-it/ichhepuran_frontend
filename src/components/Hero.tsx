@@ -8,10 +8,11 @@ export default function Hero({ content }: { content: HeroContent }) {
   return (
     <section className="relative isolate flex min-h-[720px] items-center overflow-hidden bg-sage">
       {/* Background photo — swapped for real project photography once available */}
-      <div
-        className="absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: `url(${content.backgroundImage})` }}
-        aria-hidden
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={content.backgroundImage}
+        alt={content.backgroundImageAlt ?? ""}
+        className="absolute inset-0 h-full w-full object-cover"
       />
       {/* Layered gradient overlay — reads richer than a flat tint and keeps
           text legible over any photo, darkest toward the text side */}

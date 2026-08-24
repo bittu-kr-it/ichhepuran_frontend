@@ -42,6 +42,7 @@ export const heroMock: HeroContent = {
   secondaryCtaLabel: "Our Mission",
   secondaryCtaHref: "/about",
   backgroundImage: "/images/hero-placeholder.jpg",
+  backgroundImageAlt: "Volunteers planting saplings in a restored coastal forest at sunrise.",
 };
 
 export const impactStatsMock: ImpactStat[] = [
@@ -61,6 +62,7 @@ export const pillarsMock: Pillar[] = [
     summary:
       "Restoring biodiversity by planting native species across degraded forest lands and urban centers.",
     image: "/images/pillar-tree-plantation.jpg",
+    imageAlt: "Volunteers planting young saplings in a degraded forest clearing.",
     icon: "TreePine",
     order: 1,
   },
@@ -71,6 +73,7 @@ export const pillarsMock: Pillar[] = [
     summary:
       "Desilting ponds, harvesting rainwater, and ensuring sustainable clean water access for remote villages.",
     image: "/images/pillar-water-restoration.jpg",
+    imageAlt: "A restored village pond used for clean water access.",
     icon: "Droplets",
     order: 2,
   },
@@ -81,6 +84,7 @@ export const pillarsMock: Pillar[] = [
     summary:
       "Providing modern curriculum, digital literacy, and life skills training to bridge the urban-rural divide.",
     image: "/images/pillar-education.jpg",
+    imageAlt: "Children in a rural classroom during a digital literacy session.",
     icon: "BookOpen",
     order: 3,
   },
@@ -93,6 +97,7 @@ export const testimonialsMock: Testimonial[] = [
       "The water restoration project changed everything for our village. We no longer walk 5 miles for water, and our children spend that time in the new school Ichhe Puran built.",
     name: "Saraswati Devi",
     role: "Community Leader, West Bengal",
+    photoAlt: "Portrait of Saraswati Devi, Community Leader in West Bengal.",
     order: 1,
   },
   {
@@ -101,6 +106,7 @@ export const testimonialsMock: Testimonial[] = [
       "I want to be an environmental engineer. The scholarship and the digital classes helped me dream beyond my small village. Now I know I can make a difference.",
     name: "Rahul Mondal",
     role: "Scholarship Recipient",
+    photoAlt: "Portrait of Rahul Mondal, scholarship recipient.",
     order: 2,
   },
 ];

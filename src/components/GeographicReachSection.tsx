@@ -31,7 +31,7 @@ export default function GeographicReachSection({
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={heading.image}
-              alt="Map of Ichhe Puran's geographic reach across West Bengal, Jharkhand, and Odisha"
+              alt={heading.imageAlt ?? "Map of Ichhe Puran's geographic reach across West Bengal, Jharkhand, and Odisha"}
               className="w-full rounded-3xl shadow-sm ring-1 ring-charcoal/5"
             />
           </Reveal>

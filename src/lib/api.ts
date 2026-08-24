@@ -11,6 +11,7 @@ import type {
   InitiativesHeroContent,
   Pillar,
   SectionHeading,
+  SeoSetting,
   SiteSettings,
   TeamMember,
   Testimonial,
@@ -181,4 +182,14 @@ export async function getCategories(): Promise<Category[]> {
     return categoriesMock;
   }
   return fetchJson<Category[]>("/categories");
+}
+
+// Every field is optional and unset by default (an admin hasn't overridden
+// anything yet) — so unlike the other mock fallbacks, this doesn't need its
+// own mock content file; an empty object already matches that real state.
+export async function getSeoSetting(key: string): Promise<SeoSetting> {
+  if (!API_BASE) {
+    return {};
+  }
+  return fetchJson<SeoSetting>(`/seo-settings/${key}`);
 }
