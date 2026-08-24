@@ -73,3 +73,48 @@ export interface SectionHeading {
   eyebrow: string;
   heading: string;
 }
+
+export interface AboutHeroContent {
+  headline: string;
+  subheading: string;
+}
+
+export interface AboutIntroContent {
+  originTitle: string;
+  originBody: string;
+  establishedYear: number;
+  vision: string;
+  mission: string;
+}
+
+export interface GeographicReach {
+  id: string;
+  state: string;
+  region: string;
+  description: string;
+  order: number;
+}
+
+export interface AboutMilestone {
+  id: string;
+  year: string;
+  title: string;
+  description: string;
+  order: number;
+}
+
+export interface TeamMember {
+  id: string;
+  name: string;
+  role: string;
+  bio?: string;
+  photo?: string;
+  order: number;
+}
+
+export interface TrustBadge {
+  id: string;
+  name: string;
+  description: string;
+  order: number;
+}

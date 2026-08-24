@@ -1,4 +1,18 @@
-import type { CtaContent, HeroContent, ImpactStat, Pillar, SectionHeading, SiteSettings, Testimonial } from "./types";
+import type {
+  AboutHeroContent,
+  AboutIntroContent,
+  AboutMilestone,
+  CtaContent,
+  GeographicReach,
+  HeroContent,
+  ImpactStat,
+  Pillar,
+  SectionHeading,
+  SiteSettings,
+  TeamMember,
+  Testimonial,
+  TrustBadge,
+} from "./types";
 
 // Single seam between "no backend yet" and "real Laravel CMS API".
 // Set NEXT_PUBLIC_API_URL (e.g. https://api.ichhepuran.org/api/v1) once the
@@ -74,4 +88,52 @@ export async function getSectionHeading(key: string): Promise<SectionHeading> {
     return sectionHeadingsMock[key];
   }
   return fetchJson<SectionHeading>(`/section-headings/${key}`);
+}
+
+export async function getAboutHero(): Promise<AboutHeroContent> {
+  if (!API_BASE) {
+    const { aboutHeroMock } = await import("./content/about.mock");
+    return aboutHeroMock;
+  }
+  return fetchJson<AboutHeroContent>("/about-hero");
+}
+
+export async function getAboutIntro(): Promise<AboutIntroContent> {
+  if (!API_BASE) {
+    const { aboutIntroMock } = await import("./content/about.mock");
+    return aboutIntroMock;
+  }
+  return fetchJson<AboutIntroContent>("/about-intro");
+}
+
+export async function getGeographicReach(): Promise<GeographicReach[]> {
+  if (!API_BASE) {
+    const { geographicReachMock } = await import("./content/about.mock");
+    return geographicReachMock;
+  }
+  return fetchJson<GeographicReach[]>("/geographic-reach");
+}
+
+export async function getAboutMilestones(): Promise<AboutMilestone[]> {
+  if (!API_BASE) {
+    const { aboutMilestonesMock } = await import("./content/about.mock");
+    return aboutMilestonesMock;
+  }
+  return fetchJson<AboutMilestone[]>("/about-milestones");
+}
+
+export async function getTeamMembers(): Promise<TeamMember[]> {
+  if (!API_BASE) {
+    const { teamMembersMock } = await import("./content/about.mock");
+    return teamMembersMock;
+  }
+  return fetchJson<TeamMember[]>("/team");
+}
+
+export async function getTrustBadges(): Promise<TrustBadge[]> {
+  if (!API_BASE) {
+    const { trustBadgesMock } = await import("./content/about.mock");
+    return trustBadgesMock;
+  }
+  return fetchJson<TrustBadge[]>("/trust-badges");
 }

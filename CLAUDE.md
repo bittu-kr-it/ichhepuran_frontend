@@ -34,6 +34,13 @@ mock data to `content/*.mock.ts` → add a `getXContent()` function to `api.ts`
 → build the component(s) → wire up in `page.tsx`. In that order — don't build
 the component first and hardcode data "temporarily," it doesn't get fixed later.
 
+**`Navbar`/`Footer` live in `src/app/layout.tsx`, not in individual
+`page.tsx` files.** `layout.tsx` is an async server component that fetches
+`getSiteSettings()` once and wraps `{children}` with both — a new page's
+`page.tsx` should only contain its own `<main>` content, no Navbar/Footer/
+settings-fetch of its own (this used to be duplicated per-page until it was
+refactored out once two pages existed and the duplication became obvious).
+
 ## Design tokens — locked, don't change without the user asking
 
 Defined in `src/app/globals.css`:
@@ -69,11 +76,11 @@ look, not five components independently drifting (this happened once
 already: pre-redesign, `Navbar`/`CtaBand`'s primary buttons were missing the
 shadow `Hero`'s had, purely from copy-paste drift).
 
-## Component inventory (Home page — only page built so far)
+## Component inventory
 
-`Navbar` (client, mobile menu state, animated via Framer Motion's
-`AnimatePresence`) · `Hero` (server, photo+layered-gradient overlay +
-scroll-cue) · `ImpactStats` (client, scroll-triggered count-up via
+**Home** (`src/app/page.tsx`): `Navbar` (client, mobile menu state, animated
+via Framer Motion's `AnimatePresence`) · `Hero` (server, photo+layered-gradient
+overlay + scroll-cue) · `ImpactStats` (client, scroll-triggered count-up via
 `useInView` + `requestAnimationFrame`, NOT a static number — this is what
 replaced the old site's hardcoded "0+" counters, don't regress it back to a
 static value; icon-badge stat tiles with staggered reveal) · `CorePillars`
@@ -82,8 +89,25 @@ static value; icon-badge stat tiles with staggered reveal) · `CorePillars`
 that fires a real 404) · `Testimonials` (avatar circle: real photo if
 `item.photo` is set, else initials in a forest-colored circle — the "neutral
 placeholder avatar" the root CLAUDE.md's hard rule #2 calls for) · `CtaBand`
-· `Footer` (now renders `settings.socialLinks`, which the API always
-returned but nothing displayed before this redesign).
+· `Footer` (renders `settings.socialLinks`).
+
+**About** (`src/app/about/page.tsx`): `AboutHero` (no photo/CTAs, unlike
+Home's Hero — solid gradient + BlobAccents instead, matches the actual
+source content) · `OriginStory` (origin story text + Vision/Mission cards)
+· `GeographicReachSection` (grid of state/region cards) · `JourneyTimeline`
+(vertical year-dot timeline) · `TeamGrid` (same avatar-or-initials pattern as
+`Testimonials` — duplicated as a small local `initials()` helper rather than
+extracted to a shared util; extract it if a third page needs it) ·
+`TrustBadgesSection` (icon+name+description pills). Plus the shared
+`CtaBand`/`Footer` reused from Home.
+
+Every list-style section on both pages (`CorePillars`, `Testimonials`,
+`GeographicReachSection`, `JourneyTimeline`, `TeamGrid`, `TrustBadgesSection`)
+takes a `heading: SectionHeading` prop fetched via `getSectionHeading(key)` —
+the eyebrow+heading text is admin-editable but lives on the generic backend
+`SectionHeading` model, not a field on the list items themselves. See
+`backend/CLAUDE.md`'s "List-style sections need a SectionHeading" section
+before adding a new list-style content type.
 
 Icons: `lucide-react`, looked up dynamically by string name from CMS data —
 `Icons[iconName as keyof typeof Icons]` with a `Sparkles` fallback if the
@@ -96,9 +120,12 @@ Twitter, LinkedIn, YouTube) entirely — `Footer`'s social links use a generic
 
 ## Not started yet
 
-Pages: About, Initiatives, Impact, Gallery, Get Involved, Contact. See the API
-table in `../docs/project-plan.md` (added per last session) for what each
-needs from the backend before it can be built without hardcoding.
+Pages: Initiatives, Impact, Gallery, Get Involved, Contact. See the API
+table in `../docs/project-plan.md` for what each needs from the backend
+before it can be built without hardcoding, and `../docs/raw-site-content.md`
+for the real copy to seed instead of placeholder text. Impact page needs its
+own timeline content type on the backend (don't reuse About's
+`AboutMilestone` — see root CLAUDE.md's note on the contradicting timelines).
 
 ## Verifying changes
 
