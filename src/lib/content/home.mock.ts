@@ -121,10 +121,27 @@ export const ctaMock: CtaContent = {
   secondaryCtaHref: "/get-involved#volunteer",
 };
 
+// Keyed by every section-heading key used across the site, not just Home's
+// own — getSectionHeading() reads this one map regardless of which page's
+// key is requested. geographic-reach/about-milestones/team/trust-badges
+// were previously missing here (a latent gap, unnoticed since About was
+// only ever verified against the live API, not mock mode) — filled in
+// alongside the 4 new Impact-page keys below.
 export const sectionHeadingsMock: Record<string, SectionHeading> = {
   pillars: { eyebrow: "What we do", heading: "Our Core Pillars" },
   testimonials: {
     eyebrow: "Voices of impact",
     heading: "Real stories from the communities we serve",
   },
+  "geographic-reach": { eyebrow: "Where we work", heading: "Our Geographic Reach" },
+  "about-milestones": { eyebrow: "Our journey", heading: "Milestones of Impact" },
+  team: { eyebrow: "The people behind it", heading: "Meet Our Team" },
+  "trust-badges": { eyebrow: "Transparency & trust", heading: "Certified & Accountable" },
+  "impact-milestones": { eyebrow: "Our journey", heading: "Journey of Impact" },
+  "impact-testimonials": { eyebrow: "Voices of impact", heading: "Faces of Impact" },
+  "sdg-alignment": {
+    eyebrow: "Global commitments",
+    heading: "Aligned with the UN Sustainable Development Goals",
+  },
+  "csr-synergy": { eyebrow: "Partner with purpose", heading: "Corporate Social Synergy" },
 };

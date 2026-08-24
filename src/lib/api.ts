@@ -2,14 +2,19 @@ import type {
   AboutHeroContent,
   AboutIntroContent,
   AboutMilestone,
+  CarbonStat,
   Category,
+  CsrFeature,
+  CsrPartner,
   CtaContent,
   GeographicReach,
   HeroContent,
+  ImpactHeroContent,
   ImpactStat,
   Initiative,
   InitiativesHeroContent,
   Pillar,
+  SdgAlignment,
   SectionHeading,
   SeoSetting,
   SiteSettings,
@@ -192,4 +197,46 @@ export async function getSeoSetting(key: string): Promise<SeoSetting> {
     return {};
   }
   return fetchJson<SeoSetting>(`/seo-settings/${key}`);
+}
+
+export async function getImpactHero(): Promise<ImpactHeroContent> {
+  if (!API_BASE) {
+    const { impactHeroMock } = await import("./content/impact.mock");
+    return impactHeroMock;
+  }
+  return fetchJson<ImpactHeroContent>("/impact-hero");
+}
+
+// Renders on both Home and Impact pages — see the SdgAlignment type doc.
+export async function getSdgAlignments(): Promise<SdgAlignment[]> {
+  if (!API_BASE) {
+    const { sdgAlignmentsMock } = await import("./content/impact.mock");
+    return sdgAlignmentsMock;
+  }
+  return fetchJson<SdgAlignment[]>("/sdg-alignments");
+}
+
+export async function getCsrFeatures(): Promise<CsrFeature[]> {
+  if (!API_BASE) {
+    const { csrFeaturesMock } = await import("./content/impact.mock");
+    return csrFeaturesMock;
+  }
+  return fetchJson<CsrFeature[]>("/csr-features");
+}
+
+// Can legitimately return an empty array — see CsrPartner's type doc.
+export async function getCsrPartners(): Promise<CsrPartner[]> {
+  if (!API_BASE) {
+    const { csrPartnersMock } = await import("./content/impact.mock");
+    return csrPartnersMock;
+  }
+  return fetchJson<CsrPartner[]>("/csr-partners");
+}
+
+export async function getCarbonStats(): Promise<CarbonStat[]> {
+  if (!API_BASE) {
+    const { carbonStatsMock } = await import("./content/impact.mock");
+    return carbonStatsMock;
+  }
+  return fetchJson<CarbonStat[]>("/carbon-stats");
 }

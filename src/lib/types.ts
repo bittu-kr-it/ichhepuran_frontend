@@ -180,3 +180,49 @@ export interface Initiative {
   icon: string;
   order: number;
 }
+
+export interface ImpactHeroContent {
+  headline: string;
+  subheading: string;
+}
+
+/**
+ * Renders on both Home and Impact pages — one shared, admin-managed
+ * content type (see backend/CLAUDE.md's "Site-wide" note).
+ */
+export interface SdgAlignment {
+  id: string;
+  sdgNumber: number;
+  goalName: string;
+  contributionText: string;
+  order: number;
+}
+
+export interface CsrFeature {
+  id: string;
+  title: string;
+  description: string;
+  icon: string; // lucide-react icon name
+  order: number;
+}
+
+/**
+ * Deliberately can be an empty array — no real CSR partners have been
+ * confirmed with the client yet (see ImpactPageSeeder). Components
+ * rendering this list must handle zero items gracefully.
+ */
+export interface CsrPartner {
+  id: string;
+  name: string;
+  logo?: string;
+  logoAlt?: string;
+  order: number;
+}
+
+export interface CarbonStat {
+  id: string;
+  year: string;
+  tons: number;
+  isProjected: boolean;
+  order: number;
+}

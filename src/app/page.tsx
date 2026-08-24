@@ -3,12 +3,14 @@ import Hero from "@/components/Hero";
 import ImpactStats from "@/components/ImpactStats";
 import CorePillars from "@/components/CorePillars";
 import Testimonials from "@/components/Testimonials";
+import SdgAlignmentSection from "@/components/SdgAlignmentSection";
 import CtaBand from "@/components/CtaBand";
 import {
   getCta,
   getHero,
   getImpactStats,
   getPillars,
+  getSdgAlignments,
   getSectionHeading,
   getSeoSetting,
   getTestimonials,
@@ -37,16 +39,27 @@ export async function generateMetadata(): Promise<Metadata> {
 // why (reuse across pages, independent caching), rather than one combined
 // /home payload. Navbar/Footer live in the root layout, not here.
 export default async function Home() {
-  const [hero, impactStats, pillars, pillarsHeading, testimonials, testimonialsHeading, cta] =
-    await Promise.all([
-      getHero(),
-      getImpactStats(),
-      getPillars(),
-      getSectionHeading("pillars"),
-      getTestimonials(),
-      getSectionHeading("testimonials"),
-      getCta(),
-    ]);
+  const [
+    hero,
+    impactStats,
+    pillars,
+    pillarsHeading,
+    testimonials,
+    testimonialsHeading,
+    sdgs,
+    sdgHeading,
+    cta,
+  ] = await Promise.all([
+    getHero(),
+    getImpactStats(),
+    getPillars(),
+    getSectionHeading("pillars"),
+    getTestimonials(),
+    getSectionHeading("testimonials"),
+    getSdgAlignments(),
+    getSectionHeading("sdg-alignment"),
+    getCta(),
+  ]);
 
   return (
     <main>
@@ -54,6 +67,7 @@ export default async function Home() {
       <ImpactStats stats={impactStats} />
       <CorePillars pillars={pillars} heading={pillarsHeading} />
       <Testimonials items={testimonials} heading={testimonialsHeading} />
+      <SdgAlignmentSection items={sdgs} heading={sdgHeading} />
       <CtaBand content={cta} />
     </main>
   );
