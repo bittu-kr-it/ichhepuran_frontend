@@ -10,14 +10,16 @@ export default function Hero({ content }: { content: HeroContent }) {
     <section className="relative isolate flex min-h-[720px] items-center overflow-hidden bg-sage">
       {/* The largest above-the-fold image on the site — priority skips
           lazy-loading so it doesn't become the LCP bottleneck. */}
-      <Image
-        src={content.backgroundImage}
-        alt={content.backgroundImageAlt ?? ""}
-        fill
-        priority
-        sizes="100vw"
-        className="object-cover"
-      />
+      {content.backgroundImage && (
+        <Image
+          src={content.backgroundImage}
+          alt={content.backgroundImageAlt ?? ""}
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover"
+        />
+      )}
       {/* Layered gradient overlay — reads richer than a flat tint and keeps
           text legible over any photo, darkest toward the text side */}
       <div
