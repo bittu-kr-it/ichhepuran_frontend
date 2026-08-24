@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import type { Category, GalleryItem, SectionHeading } from "@/lib/types";
 import { getCategoryColorClasses } from "@/lib/categoryColors";
 import Eyebrow from "@/components/ui/Eyebrow";
@@ -99,13 +100,14 @@ export default function GalleryGrid({
               onClick={() => setSelectedIndex(filtered.findIndex((item) => item.id === featured.id))}
               className="group block w-full overflow-hidden rounded-3xl bg-white shadow-sm ring-1 ring-charcoal/5 transition-shadow hover:shadow-xl"
             >
-              <div className="relative">
+              <div className="relative h-72 w-full sm:h-96">
                 {featured.image && (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
+                  <Image
                     src={featured.image}
                     alt={featured.imageAlt ?? featured.caption ?? "Gallery photo"}
-                    className="h-72 w-full object-cover transition-transform duration-500 group-hover:scale-105 sm:h-96"
+                    fill
+                    sizes="100vw"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                 )}
                 <span className="absolute left-4 top-4 rounded-full bg-mustard px-3 py-1 text-xs font-semibold uppercase tracking-wide text-charcoal">
@@ -136,11 +138,17 @@ export default function GalleryGrid({
                 >
                   <div className="relative">
                     {item.image && (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img
+                      // No fixed height — masonry relies on each photo's own
+                      // aspect ratio (see the component doc comment above).
+                      // width/height are sizing hints only; h-auto lets the
+                      // browser use the actual fetched image's real ratio.
+                      <Image
                         src={item.image}
                         alt={item.imageAlt ?? item.caption ?? "Gallery photo"}
-                        className="w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        width={800}
+                        height={600}
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        className="h-auto w-full object-cover transition-transform duration-500 group-hover:scale-105"
                       />
                     )}
                     <span

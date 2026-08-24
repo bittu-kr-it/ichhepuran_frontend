@@ -1,4 +1,5 @@
 import { Compass, Sparkles } from "lucide-react";
+import Image from "next/image";
 import type { AboutIntroContent } from "@/lib/types";
 import Reveal from "@/components/ui/Reveal";
 
@@ -9,12 +10,15 @@ export default function OriginStory({ content }: { content: AboutIntroContent })
         <div className="grid gap-14 lg:grid-cols-5 lg:gap-16">
           <Reveal className="lg:col-span-3">
             {content.originImage && (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={content.originImage}
-                alt={content.originImageAlt ?? content.originTitle}
-                className="mb-8 h-72 w-full rounded-3xl bg-sage object-cover shadow-sm"
-              />
+              <div className="relative mb-8 h-72 w-full overflow-hidden rounded-3xl bg-sage shadow-sm">
+                <Image
+                  src={content.originImage}
+                  alt={content.originImageAlt ?? content.originTitle}
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 60vw"
+                  className="object-cover"
+                />
+              </div>
             )}
             <span className="inline-flex items-center gap-2 rounded-full bg-forest/10 px-4 py-1.5 text-sm font-semibold text-forest">
               Est. {content.establishedYear}

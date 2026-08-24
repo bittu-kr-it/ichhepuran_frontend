@@ -1,4 +1,5 @@
 import { Building2, Globe2, QrCode } from "lucide-react";
+import Image from "next/image";
 import type { DonationMethod, SectionHeading } from "@/lib/types";
 import Eyebrow from "@/components/ui/Eyebrow";
 import Reveal from "@/components/ui/Reveal";
@@ -53,10 +54,11 @@ export default function DonationMethodsSection({
                     ))}
                   </dl>
                   {method.qrImage && (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
+                    <Image
                       src={method.qrImage}
                       alt={method.qrImageAlt ?? `${method.title} QR code`}
+                      width={128}
+                      height={128}
                       className="mt-4 h-32 w-32 self-center rounded-lg object-contain"
                     />
                   )}

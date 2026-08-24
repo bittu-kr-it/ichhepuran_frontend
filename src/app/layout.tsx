@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { getSiteSettings } from "@/lib/api";
+import { getSiteUrl } from "@/lib/siteUrl";
 
 // Self-hosted variable fonts (SIL Open Font License — see src/fonts/OFL-*.txt).
 // Self-hosting avoids a Google Fonts request at build/runtime entirely.
@@ -30,7 +31,7 @@ const inter = localFont({
 // canonical URL from this automatically, which is what "auto-generated on
 // the frontend" means in practice: no canonical URL is ever stored in the CMS.
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"),
+  metadataBase: getSiteUrl(),
   title: {
     template: "%s | Ichhe Puran",
     default: "Ichhe Puran | Restoring Earth, Empowering Communities",

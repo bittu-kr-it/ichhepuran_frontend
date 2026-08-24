@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import * as Icons from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import type { Category, Initiative } from "@/lib/types";
@@ -16,11 +17,12 @@ function InitiativeCard({ item, index }: { item: Initiative; index: number }) {
         <div className="relative">
           <div className="relative flex h-44 w-full items-center justify-center overflow-hidden bg-sage">
             {item.image ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
+              <Image
                 src={item.image}
                 alt={item.imageAlt ?? item.title}
-                className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                className="object-cover transition-transform duration-500 group-hover:scale-110"
               />
             ) : (
               <Icon className="h-14 w-14 text-white/40" strokeWidth={1.25} />

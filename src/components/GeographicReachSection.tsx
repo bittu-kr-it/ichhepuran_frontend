@@ -1,4 +1,5 @@
 import { MapPin } from "lucide-react";
+import Image from "next/image";
 import type { GeographicReach, SectionHeading } from "@/lib/types";
 import BlobAccent from "@/components/ui/BlobAccent";
 import Eyebrow from "@/components/ui/Eyebrow";
@@ -28,11 +29,18 @@ export default function GeographicReachSection({
 
         {heading.image && (
           <Reveal delay={0.1} className="mt-10">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+            {/* No fixed height — this is a real infographic, not a photo to
+                crop, so its own aspect ratio is preserved via h-auto rather
+                than object-cover. width/height below are sizing hints only;
+                the browser uses the actual fetched image's ratio for the
+                auto dimension. */}
+            <Image
               src={heading.image}
               alt={heading.imageAlt ?? "Map of Ichhe Puran's geographic reach across West Bengal, Jharkhand, and Odisha"}
-              className="w-full rounded-3xl shadow-sm ring-1 ring-charcoal/5"
+              width={1200}
+              height={800}
+              sizes="(max-width: 1024px) 100vw, 896px"
+              className="h-auto w-full rounded-3xl shadow-sm ring-1 ring-charcoal/5"
             />
           </Reveal>
         )}

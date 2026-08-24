@@ -1,4 +1,5 @@
 import { ChevronDown } from "lucide-react";
+import Image from "next/image";
 import type { HeroContent } from "@/lib/types";
 import Button from "@/components/ui/Button";
 import Eyebrow from "@/components/ui/Eyebrow";
@@ -7,12 +8,15 @@ import Reveal from "@/components/ui/Reveal";
 export default function Hero({ content }: { content: HeroContent }) {
   return (
     <section className="relative isolate flex min-h-[720px] items-center overflow-hidden bg-sage">
-      {/* Background photo — swapped for real project photography once available */}
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
+      {/* The largest above-the-fold image on the site — priority skips
+          lazy-loading so it doesn't become the LCP bottleneck. */}
+      <Image
         src={content.backgroundImage}
         alt={content.backgroundImageAlt ?? ""}
-        className="absolute inset-0 h-full w-full object-cover"
+        fill
+        priority
+        sizes="100vw"
+        className="object-cover"
       />
       {/* Layered gradient overlay — reads richer than a flat tint and keeps
           text legible over any photo, darkest toward the text side */}

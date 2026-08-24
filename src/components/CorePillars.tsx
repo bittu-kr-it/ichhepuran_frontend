@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import * as Icons from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import type { Pillar, SectionHeading } from "@/lib/types";
@@ -42,11 +43,12 @@ export default function CorePillars({
                   <div className="relative">
                     <div className="relative flex h-52 w-full items-center justify-center overflow-hidden bg-sage">
                       {pillar.image ? (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img
+                        <Image
                           src={pillar.image}
                           alt={pillar.imageAlt ?? pillar.title}
-                          className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                          fill
+                          sizes="(max-width: 768px) 100vw, 33vw"
+                          className="object-cover transition-transform duration-500 group-hover:scale-110"
                         />
                       ) : (
                         <Icon className="h-16 w-16 text-white/40" strokeWidth={1.25} />

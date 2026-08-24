@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
@@ -53,11 +54,13 @@ export default async function InitiativeDetail({
     <main>
       <section className="relative isolate flex min-h-[380px] items-end overflow-hidden bg-sage">
         {initiative.image ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
+          <Image
             src={initiative.image}
             alt={initiative.imageAlt ?? initiative.title}
-            className="absolute inset-0 h-full w-full object-cover"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover"
           />
         ) : (
           <div className="absolute inset-0 flex items-center justify-center bg-forest">

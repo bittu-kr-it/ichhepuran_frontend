@@ -1,4 +1,5 @@
 import * as Icons from "lucide-react";
+import Image from "next/image";
 import type { LucideIcon } from "lucide-react";
 import type { CarbonStat, CsrFeature, CsrPartner, SectionHeading } from "@/lib/types";
 import Eyebrow from "@/components/ui/Eyebrow";
@@ -98,13 +99,21 @@ export default function CsrSynergySection({
             <div className="mt-6 flex flex-wrap items-center justify-center gap-10">
               {sortedPartners.map((partner) =>
                 partner.logo ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
+                  // Fixed contain-box, not h-10/w-auto — partner logos have
+                  // unknown/varied aspect ratios, and next/image's fill mode
+                  // needs a sized ancestor rather than an auto width.
+                  <div
                     key={partner.id}
-                    src={partner.logo}
-                    alt={partner.logoAlt ?? partner.name}
-                    className="h-10 w-auto opacity-80 grayscale transition-opacity hover:opacity-100"
-                  />
+                    className="relative h-10 w-32 opacity-80 grayscale transition-opacity hover:opacity-100"
+                  >
+                    <Image
+                      src={partner.logo}
+                      alt={partner.logoAlt ?? partner.name}
+                      fill
+                      sizes="128px"
+                      className="object-contain"
+                    />
+                  </div>
                 ) : (
                   <span key={partner.id} className="text-sm font-semibold text-white/70">
                     {partner.name}

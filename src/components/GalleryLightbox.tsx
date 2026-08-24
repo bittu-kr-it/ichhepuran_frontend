@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Image from "next/image";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import type { GalleryItem } from "@/lib/types";
 
@@ -105,11 +106,13 @@ export default function GalleryLightbox({
 
       <div className="max-h-[85vh] max-w-4xl" onClick={(e) => e.stopPropagation()}>
         {item.image && (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
+          <Image
             key={item.id}
             src={item.image}
             alt={item.imageAlt ?? item.caption ?? "Gallery photo"}
+            width={1200}
+            height={900}
+            sizes="90vw"
             className="max-h-[75vh] w-auto rounded-2xl object-contain"
           />
         )}

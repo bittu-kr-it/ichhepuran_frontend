@@ -1,4 +1,5 @@
 import { Quote } from "lucide-react";
+import Image from "next/image";
 import type { SectionHeading, Testimonial } from "@/lib/types";
 import Eyebrow from "@/components/ui/Eyebrow";
 import Reveal from "@/components/ui/Reveal";
@@ -46,10 +47,11 @@ export default function Testimonials({
                 </blockquote>
                 <figcaption className="relative mt-6 flex items-center gap-3">
                   {item.photo ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
+                    <Image
                       src={item.photo}
                       alt={item.photoAlt ?? item.name}
+                      width={48}
+                      height={48}
                       className="h-12 w-12 flex-none rounded-full object-cover ring-2 ring-mustard/40"
                     />
                   ) : (

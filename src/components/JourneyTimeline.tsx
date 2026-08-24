@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { AboutMilestone, SectionHeading } from "@/lib/types";
 import Eyebrow from "@/components/ui/Eyebrow";
 import Reveal from "@/components/ui/Reveal";
@@ -37,12 +38,15 @@ export default function JourneyTimeline({
                   </span>
                   <div className="flex flex-1 flex-col gap-4 rounded-2xl bg-white p-6 shadow-sm ring-1 ring-charcoal/5 sm:flex-row sm:items-center">
                     {item.image && (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img
-                        src={item.image}
-                        alt={item.imageAlt ?? item.title}
-                        className="h-40 w-full flex-none rounded-xl bg-sage object-cover sm:h-24 sm:w-32"
-                      />
+                      <div className="relative h-40 w-full flex-none overflow-hidden rounded-xl bg-sage sm:h-24 sm:w-32">
+                        <Image
+                          src={item.image}
+                          alt={item.imageAlt ?? item.title}
+                          fill
+                          sizes="(max-width: 640px) 100vw, 128px"
+                          className="object-cover"
+                        />
+                      </div>
                     )}
                     <div>
                       <h3 className="font-display text-xl font-semibold text-charcoal">
