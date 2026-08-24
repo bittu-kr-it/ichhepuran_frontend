@@ -4,17 +4,25 @@ import type {
   AboutMilestone,
   CarbonStat,
   Category,
+  ContactHeroContent,
+  ContactSubmissionPayload,
+  CreateDonationOrderPayload,
+  CreateDonationOrderResponse,
   CsrFeature,
+  CsrInquiryPayload,
   CsrPartner,
   CtaContent,
+  DonationMethod,
   GalleryHeroContent,
   GalleryItem,
   GeographicReach,
+  GetInvolvedHeroContent,
   HeroContent,
   ImpactHeroContent,
   ImpactStat,
   Initiative,
   InitiativesHeroContent,
+  NewsletterSubscribePayload,
   Pillar,
   SdgAlignment,
   SectionHeading,
@@ -23,6 +31,8 @@ import type {
   TeamMember,
   Testimonial,
   TrustBadge,
+  VerifyDonationPayload,
+  VolunteerApplicationPayload,
 } from "./types";
 
 // Single seam between "no backend yet" and "real Laravel CMS API".
@@ -41,6 +51,29 @@ async function fetchJson<T>(path: string): Promise<T> {
   });
   if (!res.ok) {
     throw new Error(`API request failed: ${path} (${res.status})`);
+  }
+  return res.json();
+}
+
+// For the write/POST endpoints (forms, Razorpay). Deliberately has no
+// mock-fallback branch — unlike every getX() below, there's nothing
+// meaningful to fall back to for a real form submission when
+// NEXT_PUBLIC_API_URL is unset; it just throws a clear error instead.
+async function postJson<TResponse, TPayload>(path: string, payload: TPayload): Promise<TResponse> {
+  if (!API_BASE) {
+    throw new Error("NEXT_PUBLIC_API_URL is not set — cannot submit this form in the current environment.");
+  }
+  const res = await fetch(`${API_BASE}${path}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+  if (!res.ok) {
+    const body = await res.json().catch(() => null);
+    const firstFieldError = body?.errors ? Object.values(body.errors)[0] : undefined;
+    const message =
+      (Array.isArray(firstFieldError) ? firstFieldError[0] : undefined) ?? body?.message ?? `Request failed (${res.status})`;
+    throw new Error(message);
   }
   return res.json();
 }
@@ -265,4 +298,54 @@ export async function getGalleryCategories(): Promise<Category[]> {
     return galleryCategoriesMock;
   }
   return fetchJson<Category[]>("/gallery-categories");
+}
+
+export async function getGetInvolvedHero(): Promise<GetInvolvedHeroContent> {
+  if (!API_BASE) {
+    const { getInvolvedHeroMock } = await import("./content/getInvolved.mock");
+    return getInvolvedHeroMock;
+  }
+  return fetchJson<GetInvolvedHeroContent>("/get-involved-hero");
+}
+
+export async function getDonationMethods(): Promise<DonationMethod[]> {
+  if (!API_BASE) {
+    const { donationMethodsMock } = await import("./content/getInvolved.mock");
+    return donationMethodsMock;
+  }
+  return fetchJson<DonationMethod[]>("/donation-methods");
+}
+
+export async function getContactHero(): Promise<ContactHeroContent> {
+  if (!API_BASE) {
+    const { contactHeroMock } = await import("./content/contact.mock");
+    return contactHeroMock;
+  }
+  return fetchJson<ContactHeroContent>("/contact-hero");
+}
+
+export async function createDonationOrder(
+  payload: CreateDonationOrderPayload
+): Promise<CreateDonationOrderResponse> {
+  return postJson<CreateDonationOrderResponse, CreateDonationOrderPayload>("/donations/create-order", payload);
+}
+
+export async function verifyDonation(payload: VerifyDonationPayload): Promise<{ status: string }> {
+  return postJson<{ status: string }, VerifyDonationPayload>("/donations/verify", payload);
+}
+
+export async function submitVolunteerApplication(payload: VolunteerApplicationPayload): Promise<{ message: string }> {
+  return postJson<{ message: string }, VolunteerApplicationPayload>("/volunteer-applications", payload);
+}
+
+export async function submitCsrInquiry(payload: CsrInquiryPayload): Promise<{ message: string }> {
+  return postJson<{ message: string }, CsrInquiryPayload>("/csr-inquiries", payload);
+}
+
+export async function submitContactForm(payload: ContactSubmissionPayload): Promise<{ message: string }> {
+  return postJson<{ message: string }, ContactSubmissionPayload>("/contact-submissions", payload);
+}
+
+export async function subscribeToNewsletter(payload: NewsletterSubscribePayload): Promise<{ message: string }> {
+  return postJson<{ message: string }, NewsletterSubscribePayload>("/newsletter-subscribers", payload);
 }

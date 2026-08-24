@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Globe, Mail, MapPin, Phone } from "lucide-react";
 import type { SiteSettings } from "@/lib/types";
+import NewsletterSignup from "@/components/NewsletterSignup";
 
 // lucide-react dropped brand/logo icons (Facebook, Instagram, etc.) in
 // recent versions, so every social link gets the same generic globe icon —
@@ -35,6 +36,8 @@ export default function Footer({ settings }: { settings: SiteSettings }) {
                 ))}
               </div>
             )}
+
+            <NewsletterSignup />
           </div>
 
           <div>

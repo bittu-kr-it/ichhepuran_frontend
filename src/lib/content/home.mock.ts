@@ -144,4 +144,7 @@ export const sectionHeadingsMock: Record<string, SectionHeading> = {
     heading: "Aligned with the UN Sustainable Development Goals",
   },
   "csr-synergy": { eyebrow: "Partner with purpose", heading: "Corporate Social Synergy" },
+  "donation-methods": { eyebrow: "Ways to give", heading: "Choose How to Give" },
+  volunteer: { eyebrow: "Give your time", heading: "Volunteer With Us" },
+  "csr-partnership": { eyebrow: "Partner with purpose", heading: "CSR & Corporate Partnerships" },
 };

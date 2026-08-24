@@ -252,3 +252,94 @@ export interface GalleryItem {
   // convention.
   isFeatured: boolean;
 }
+
+export interface GetInvolvedHeroContent {
+  headline: string;
+  subheading: string;
+}
+
+export interface ContactHeroContent {
+  headline: string;
+  subheading: string;
+}
+
+/**
+ * Static, admin-managed donation details (bank/UPI/international) —
+ * distinct from the Razorpay online-payment integration. `fields` is a
+ * flexible label->value map since each type needs different fields.
+ */
+export interface DonationMethod {
+  id: string;
+  type: "bank" | "upi" | "international";
+  title: string;
+  fields: Record<string, string>;
+  qrImage?: string | null;
+  qrImageAlt?: string;
+  instructions?: string | null;
+  order: number;
+}
+
+// Payload/response shapes for the write-form and Razorpay endpoints —
+// camelCase, matching the backend FormRequests field-for-field. These
+// endpoints have no mock fallback (see lib/api.ts's postJson) since
+// there's nothing meaningful to fall back to for a real submission.
+
+export interface CreateDonationOrderPayload {
+  donorName: string;
+  donorEmail: string;
+  donorPhone?: string;
+  amount: number;
+}
+
+export interface CreateDonationOrderResponse {
+  orderId: string;
+  amount: number;
+  currency: string;
+  keyId: string;
+  donationId: string;
+}
+
+export interface VerifyDonationPayload {
+  donationId: string;
+  razorpayOrderId: string;
+  razorpayPaymentId: string;
+  razorpaySignature: string;
+}
+
+export type AreaOfInterest =
+  | "reforestation"
+  | "waste_management"
+  | "community_education"
+  | "administrative_support";
+
+export interface VolunteerApplicationPayload {
+  name: string;
+  email: string;
+  countryCode: string;
+  phone: string;
+  areaOfInterest: AreaOfInterest;
+  message: string;
+}
+
+export type BudgetRange = "5l_10l" | "10l_50l" | "50l_plus";
+
+export interface CsrInquiryPayload {
+  organizationName: string;
+  contactPerson: string;
+  email: string;
+  countryCode: string;
+  phone: string;
+  budgetRange: BudgetRange;
+  goals: string;
+}
+
+export interface ContactSubmissionPayload {
+  name: string;
+  email: string;
+  subject?: string;
+  message: string;
+}
+
+export interface NewsletterSubscribePayload {
+  email: string;
+}
