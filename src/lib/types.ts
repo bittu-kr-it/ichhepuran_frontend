@@ -343,3 +343,22 @@ export interface ContactSubmissionPayload {
 export interface NewsletterSubscribePayload {
   email: string;
 }
+
+/**
+ * Lean shape for the Footer's dynamic link list — see LegalPageSummaryResource.
+ * A full LegalPage admin resource (not fixed singleton pages, unlike
+ * SeoSetting's per-page keys) so the client can add more legal pages later
+ * (e.g. a Cookie Policy once analytics is added) without a code change.
+ */
+export interface LegalPageSummary {
+  title: string;
+  slug: string;
+}
+
+export interface LegalPage {
+  id: string;
+  title: string;
+  slug: string;
+  body: string;
+  updatedAt: string;
+}

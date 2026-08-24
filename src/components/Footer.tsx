@@ -2,12 +2,20 @@ import Link from "next/link";
 import { Globe, Mail, MapPin, Phone } from "lucide-react";
 import type { SiteSettings } from "@/lib/types";
 import NewsletterSignup from "@/components/NewsletterSignup";
+import { getLegalPages } from "@/lib/api";
 
 // lucide-react dropped brand/logo icons (Facebook, Instagram, etc.) in
 // recent versions, so every social link gets the same generic globe icon —
 // the label is still shown via aria-label for screen readers.
 
-export default function Footer({ settings }: { settings: SiteSettings }) {
+// Async server component — fetches its own legal-page links rather than
+// having every page that renders <Footer> thread an extra prop through.
+// The link list is fully admin-driven (see LegalPageResource): adding a
+// page in the admin panel (e.g. a future Cookie Policy) shows up here
+// automatically, no frontend change needed.
+export default async function Footer({ settings }: { settings: SiteSettings }) {
+  const legalPages = await getLegalPages();
+
   return (
     <footer className="relative bg-charcoal py-16 text-white/80">
       <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-forest via-mustard to-sage" />
@@ -72,8 +80,23 @@ export default function Footer({ settings }: { settings: SiteSettings }) {
           </div>
         </div>
 
-        <div className="mt-12 border-t border-white/10 pt-6 text-xs text-white/50">
-          © {new Date().getFullYear()} {settings.orgName}. All rights reserved.
+        <div className="mt-12 flex flex-col gap-4 border-t border-white/10 pt-6 text-xs text-white/50 sm:flex-row sm:items-center sm:justify-between">
+          <span>
+            © {new Date().getFullYear()} {settings.orgName}. All rights reserved.
+          </span>
+          {legalPages.length > 0 && (
+            <div className="flex flex-wrap gap-x-5 gap-y-2">
+              {legalPages.map((page) => (
+                <Link
+                  key={page.slug}
+                  href={`/${page.slug}`}
+                  className="transition-colors hover:text-mustard"
+                >
+                  {page.title}
+                </Link>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </footer>

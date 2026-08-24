@@ -22,6 +22,8 @@ import type {
   ImpactStat,
   Initiative,
   InitiativesHeroContent,
+  LegalPage,
+  LegalPageSummary,
   NewsletterSubscribePayload,
   Pillar,
   SdgAlignment,
@@ -322,6 +324,31 @@ export async function getContactHero(): Promise<ContactHeroContent> {
     return contactHeroMock;
   }
   return fetchJson<ContactHeroContent>("/contact-hero");
+}
+
+export async function getLegalPages(): Promise<LegalPageSummary[]> {
+  if (!API_BASE) {
+    const { legalPagesSummaryMock } = await import("./content/legal.mock");
+    return legalPagesSummaryMock;
+  }
+  return fetchJson<LegalPageSummary[]>("/legal-pages");
+}
+
+// Returns null on a genuine 404 (unknown slug), same convention as
+// getInitiative — lets the page call notFound() instead of throwing.
+export async function getLegalPage(slug: string): Promise<LegalPage | null> {
+  if (!API_BASE) {
+    const { legalPagesMock } = await import("./content/legal.mock");
+    return legalPagesMock.find((page) => page.slug === slug) ?? null;
+  }
+  const res = await fetch(`${API_BASE}/legal-pages/${slug}`, {
+    next: { revalidate: 60 },
+  });
+  if (res.status === 404) return null;
+  if (!res.ok) {
+    throw new Error(`API request failed: /legal-pages/${slug} (${res.status})`);
+  }
+  return res.json();
 }
 
 export async function createDonationOrder(
