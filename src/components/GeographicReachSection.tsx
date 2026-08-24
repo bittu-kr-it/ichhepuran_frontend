@@ -26,6 +26,17 @@ export default function GeographicReachSection({
           <div className="mt-4 h-1 w-16 rounded-full bg-mustard" />
         </Reveal>
 
+        {heading.image && (
+          <Reveal delay={0.1} className="mt-10">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={heading.image}
+              alt="Map of Ichhe Puran's geographic reach across West Bengal, Jharkhand, and Odisha"
+              className="w-full rounded-3xl shadow-sm ring-1 ring-charcoal/5"
+            />
+          </Reveal>
+        )}
+
         <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {sorted.map((item, index) => (
             <Reveal key={item.id} delay={index * 0.06}>

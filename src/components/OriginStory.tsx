@@ -8,6 +8,12 @@ export default function OriginStory({ content }: { content: AboutIntroContent })
       <div className="mx-auto max-w-7xl px-6 lg:px-16">
         <div className="grid gap-14 lg:grid-cols-5 lg:gap-16">
           <Reveal className="lg:col-span-3">
+            {content.originImage && (
+              <div
+                className="mb-8 h-72 w-full rounded-3xl bg-sage bg-cover bg-center shadow-sm"
+                style={{ backgroundImage: `url(${content.originImage})` }}
+              />
+            )}
             <span className="inline-flex items-center gap-2 rounded-full bg-forest/10 px-4 py-1.5 text-sm font-semibold text-forest">
               Est. {content.establishedYear}
             </span>

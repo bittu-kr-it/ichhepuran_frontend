@@ -35,13 +35,21 @@ export default function JourneyTimeline({
                   <span className="relative z-10 flex h-14 w-14 flex-none items-center justify-center rounded-full bg-forest font-display text-sm font-bold text-white shadow-md sm:h-16 sm:w-16 sm:text-base">
                     {item.year}
                   </span>
-                  <div className="flex-1 rounded-2xl bg-white p-6 shadow-sm ring-1 ring-charcoal/5">
-                    <h3 className="font-display text-xl font-semibold text-charcoal">
-                      {item.title}
-                    </h3>
-                    <p className="mt-2 text-[15px] leading-relaxed text-charcoal-soft">
-                      {item.description}
-                    </p>
+                  <div className="flex flex-1 flex-col gap-4 rounded-2xl bg-white p-6 shadow-sm ring-1 ring-charcoal/5 sm:flex-row sm:items-center">
+                    {item.image && (
+                      <div
+                        className="h-40 w-full flex-none rounded-xl bg-sage bg-cover bg-center sm:h-24 sm:w-32"
+                        style={{ backgroundImage: `url(${item.image})` }}
+                      />
+                    )}
+                    <div>
+                      <h3 className="font-display text-xl font-semibold text-charcoal">
+                        {item.title}
+                      </h3>
+                      <p className="mt-2 text-[15px] leading-relaxed text-charcoal-soft">
+                        {item.description}
+                      </p>
+                    </div>
                   </div>
                 </div>
               </Reveal>

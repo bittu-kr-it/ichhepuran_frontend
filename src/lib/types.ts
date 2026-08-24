@@ -72,6 +72,7 @@ export interface CtaContent {
 export interface SectionHeading {
   eyebrow: string;
   heading: string;
+  image?: string;
 }
 
 export interface AboutHeroContent {
@@ -85,6 +86,7 @@ export interface AboutIntroContent {
   establishedYear: number;
   vision: string;
   mission: string;
+  originImage?: string;
 }
 
 export interface GeographicReach {
@@ -100,6 +102,7 @@ export interface AboutMilestone {
   year: string;
   title: string;
   description: string;
+  image?: string;
   order: number;
 }
 
