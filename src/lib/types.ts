@@ -226,3 +226,29 @@ export interface CarbonStat {
   isProjected: boolean;
   order: number;
 }
+
+export interface GalleryHeroContent {
+  headline: string;
+  subheading: string;
+}
+
+/**
+ * `category` is an admin-managed Category master, same pattern as
+ * Initiative's category (see backend/CLAUDE.md's "Gallery" note) — a
+ * fixed 3-value enum was tried first, then converted to this master per
+ * an explicit request to mirror Initiative's add/remove/reorder pattern.
+ * `caption`/`imageAlt` are optional: the lightbox only shows a caption
+ * when present.
+ */
+export interface GalleryItem {
+  id: string;
+  image: string | null;
+  imageAlt?: string;
+  caption?: string | null;
+  category: Category;
+  order: number;
+  // Explicit admin choice — at most one item is true at a time (enforced
+  // backend-side), replacing an earlier "lowest order = featured"
+  // convention.
+  isFeatured: boolean;
+}

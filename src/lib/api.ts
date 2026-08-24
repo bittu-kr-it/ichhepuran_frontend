@@ -7,6 +7,8 @@ import type {
   CsrFeature,
   CsrPartner,
   CtaContent,
+  GalleryHeroContent,
+  GalleryItem,
   GeographicReach,
   HeroContent,
   ImpactHeroContent,
@@ -239,4 +241,28 @@ export async function getCarbonStats(): Promise<CarbonStat[]> {
     return carbonStatsMock;
   }
   return fetchJson<CarbonStat[]>("/carbon-stats");
+}
+
+export async function getGalleryHero(): Promise<GalleryHeroContent> {
+  if (!API_BASE) {
+    const { galleryHeroMock } = await import("./content/gallery.mock");
+    return galleryHeroMock;
+  }
+  return fetchJson<GalleryHeroContent>("/gallery-hero");
+}
+
+export async function getGalleryItems(): Promise<GalleryItem[]> {
+  if (!API_BASE) {
+    const { galleryItemsMock } = await import("./content/gallery.mock");
+    return galleryItemsMock;
+  }
+  return fetchJson<GalleryItem[]>("/gallery-items");
+}
+
+export async function getGalleryCategories(): Promise<Category[]> {
+  if (!API_BASE) {
+    const { galleryCategoriesMock } = await import("./content/gallery.mock");
+    return galleryCategoriesMock;
+  }
+  return fetchJson<Category[]>("/gallery-categories");
 }
