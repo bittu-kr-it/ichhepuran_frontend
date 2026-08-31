@@ -21,7 +21,9 @@ export default function Navbar({ settings }: { settings: SiteSettings }) {
 
   return (
     <header className="sticky top-0 z-50 border-b border-black/5 bg-white/95 shadow-sm backdrop-blur">
-      <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-16">
+      {/* Fixed height (not padding-driven) so Hero's viewport-height calc
+          (100dvh minus this) stays accurate regardless of content changes. */}
+      <nav className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 lg:px-16">
         <Link href="/" className="flex items-center gap-2">
           {settings.orgLogo ? (
             <Image

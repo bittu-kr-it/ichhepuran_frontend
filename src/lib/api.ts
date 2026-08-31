@@ -17,7 +17,8 @@ import type {
   GalleryItem,
   GeographicReach,
   GetInvolvedHeroContent,
-  HeroContent,
+  HeroCarouselSettings,
+  HeroSlide,
   ImpactHeroContent,
   ImpactStat,
   Initiative,
@@ -88,12 +89,20 @@ export async function getSiteSettings(): Promise<SiteSettings> {
   return fetchJson<SiteSettings>("/settings");
 }
 
-export async function getHero(): Promise<HeroContent> {
+export async function getHeroSlides(): Promise<HeroSlide[]> {
   if (!API_BASE) {
-    const { heroMock } = await import("./content/home.mock");
-    return heroMock;
+    const { heroSlidesMock } = await import("./content/home.mock");
+    return heroSlidesMock;
   }
-  return fetchJson<HeroContent>("/hero");
+  return fetchJson<HeroSlide[]>("/hero-slides");
+}
+
+export async function getHeroCarouselSettings(): Promise<HeroCarouselSettings> {
+  if (!API_BASE) {
+    const { heroCarouselSettingsMock } = await import("./content/home.mock");
+    return heroCarouselSettingsMock;
+  }
+  return fetchJson<HeroCarouselSettings>("/hero-carousel-settings");
 }
 
 export async function getImpactStats(): Promise<ImpactStat[]> {

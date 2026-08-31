@@ -21,7 +21,16 @@ export interface SiteSettings {
   donateHref: string;
 }
 
-export interface HeroContent {
+/**
+ * One slide of the Home hero carousel — a full CRUD list (add/remove/
+ * reorder freely from the admin), same `{id, order, ...}` convention as
+ * Pillar/Testimonial/AboutMilestone. `backgroundImage` can be null (a
+ * slide can be published with no photo yet, falling back to a plain
+ * color background) — see Hero.tsx.
+ */
+export interface HeroSlide {
+  id: string;
+  order: number;
   eyebrow: string;
   headline: string;
   subheading: string;
@@ -29,8 +38,19 @@ export interface HeroContent {
   primaryCtaHref: string;
   secondaryCtaLabel: string;
   secondaryCtaHref: string;
-  backgroundImage: string; // media library asset URL once real photography exists
+  backgroundImage: string | null;
   backgroundImageAlt?: string;
+}
+
+export type HeroIndicatorStyle = "circle" | "dot" | "dash" | "plant";
+
+/**
+ * Carousel-wide display options — global to the whole carousel, not
+ * per-slide (see backend/CLAUDE.md's Home Page entry for why).
+ */
+export interface HeroCarouselSettings {
+  indicatorStyle: HeroIndicatorStyle;
+  gradientOverlay: boolean;
 }
 
 export interface ImpactStat {

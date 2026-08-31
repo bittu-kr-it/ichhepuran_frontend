@@ -7,7 +7,8 @@ import SdgAlignmentSection from "@/components/SdgAlignmentSection";
 import CtaBand from "@/components/CtaBand";
 import {
   getCta,
-  getHero,
+  getHeroCarouselSettings,
+  getHeroSlides,
   getImpactStats,
   getPillars,
   getSdgAlignments,
@@ -20,15 +21,17 @@ import { buildPageMetadata } from "@/lib/seo";
 // No fallbackTitle here — omitting it (unless the admin sets an override in
 // SEO Settings) lets the title inherit the root layout's own default rather
 // than repeating it, since Home's hero headline has a line break that isn't
-// title-shaped. Description comes from hero.subheading, already fetched
-// content, not a new hardcoded string.
+// title-shaped. Description/image come from the carousel's first slide (by
+// order) — the same slide that renders as the page's one <h1> — not a new
+// hardcoded string.
 export async function generateMetadata(): Promise<Metadata> {
-  const [seo, hero] = await Promise.all([getSeoSetting("home"), getHero()]);
+  const [seo, heroSlides] = await Promise.all([getSeoSetting("home"), getHeroSlides()]);
+  const firstSlide = [...heroSlides].sort((a, b) => a.order - b.order)[0];
   return buildPageMetadata({
     seo,
     path: "/",
-    fallbackDescription: hero.subheading,
-    fallbackImage: hero.backgroundImage,
+    fallbackDescription: firstSlide?.subheading ?? "",
+    fallbackImage: firstSlide?.backgroundImage,
   });
 }
 
@@ -40,7 +43,8 @@ export async function generateMetadata(): Promise<Metadata> {
 // /home payload. Navbar/Footer live in the root layout, not here.
 export default async function Home() {
   const [
-    hero,
+    heroSlides,
+    heroCarouselSettings,
     impactStats,
     pillars,
     pillarsHeading,
@@ -50,7 +54,8 @@ export default async function Home() {
     sdgHeading,
     cta,
   ] = await Promise.all([
-    getHero(),
+    getHeroSlides(),
+    getHeroCarouselSettings(),
     getImpactStats(),
     getPillars(),
     getSectionHeading("pillars"),
@@ -63,7 +68,7 @@ export default async function Home() {
 
   return (
     <main>
-      <Hero content={hero} />
+      <Hero slides={heroSlides} settings={heroCarouselSettings} />
       <ImpactStats stats={impactStats} />
       <CorePillars pillars={pillars} heading={pillarsHeading} />
       <Testimonials items={testimonials} heading={testimonialsHeading} />

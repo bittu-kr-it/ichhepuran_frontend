@@ -1,4 +1,4 @@
-import type { Category, CtaContent, HeroContent, ImpactStat, Pillar, SectionHeading, SiteSettings, Testimonial } from "../types";
+import type { Category, CtaContent, HeroCarouselSettings, HeroSlide, ImpactStat, Pillar, SectionHeading, SiteSettings, Testimonial } from "../types";
 
 const environmentCategory: Category = { slug: "environment", name: "Environment", color: "forest", order: 1 };
 const waterCategory: Category = { slug: "water", name: "Water", color: "sage", order: 2 };
@@ -34,17 +34,100 @@ export const siteSettingsMock: SiteSettings = {
   donateHref: "/get-involved#donate",
 };
 
-export const heroMock: HeroContent = {
-  eyebrow: "Reforestation · Water · Education",
-  headline: "Restoring Earth,\nEmpowering Communities",
-  subheading:
-    "A philanthropic endeavor dedicated to reforestation, water conservation, and quality education for underserved children across eastern India.",
-  primaryCtaLabel: "Donate Now",
-  primaryCtaHref: "/get-involved#donate",
-  secondaryCtaLabel: "Our Mission",
-  secondaryCtaHref: "/about",
-  backgroundImage: "/images/hero-placeholder.jpg",
-  backgroundImageAlt: "Volunteers planting saplings in a restored coastal forest at sunrise.",
+// Mirrors the real 6-slide carousel seeded by HomePageSeeder — mock mode is
+// a dev-only "no backend" fallback, not meant to show final photography, so
+// every slide reuses the one placeholder image (or null, matching the 3
+// real slides seeded without a photo yet — see Hero.tsx's fallback).
+export const heroSlidesMock: HeroSlide[] = [
+  {
+    id: "1",
+    order: 1,
+    eyebrow: "Reforestation · Water · Education",
+    headline: "Restoring Earth,\nEmpowering Communities",
+    subheading:
+      "A philanthropic endeavor dedicated to reforestation, water conservation, and quality education for underserved children across eastern India.",
+    primaryCtaLabel: "Donate Now",
+    primaryCtaHref: "/get-involved#donate",
+    secondaryCtaLabel: "Our Mission",
+    secondaryCtaHref: "/about",
+    backgroundImage: "/images/hero-placeholder.jpg",
+    backgroundImageAlt: "Volunteers planting saplings in a restored coastal forest at sunrise.",
+  },
+  {
+    id: "2",
+    order: 2,
+    eyebrow: "Tree Plantation · Community Action",
+    headline: "One Sapling,\nOne Thousand Tomorrows",
+    subheading:
+      "From degraded hillsides to barren roadsides, our plantation drives put native saplings in the ground alongside the volunteers, farmers, and schoolchildren who will watch them grow.",
+    primaryCtaLabel: "Donate Now",
+    primaryCtaHref: "/get-involved#donate",
+    secondaryCtaLabel: "See Our Initiatives",
+    secondaryCtaHref: "/initiatives",
+    backgroundImage: "/images/hero-placeholder.jpg",
+    backgroundImageAlt: "Volunteers and children lined up to plant tree saplings during a community plantation drive.",
+  },
+  {
+    id: "3",
+    order: 3,
+    eyebrow: "Urban Miyawaki Forests",
+    headline: "Dense Forests,\nGrown in the Heart of the City",
+    subheading:
+      "Using the Miyawaki method, we transform small urban plots into thick, fast-growing native forests — cooling neighborhoods, cleaning the air, and bringing biodiversity back to the concrete landscape.",
+    primaryCtaLabel: "Donate Now",
+    primaryCtaHref: "/get-involved#donate",
+    secondaryCtaLabel: "Explore Impact",
+    secondaryCtaHref: "/impact",
+    backgroundImage: null,
+    backgroundImageAlt: "A young, densely planted Miyawaki-method urban forest with saplings growing close together.",
+  },
+  {
+    id: "4",
+    order: 4,
+    eyebrow: "Agroforestry · Farmer Livelihoods",
+    headline: "Trees That\nFeed Families, Too",
+    subheading:
+      "We work alongside smallholder farmers to integrate fruit and timber trees into their fields — restoring soil health while opening a second, sustainable source of income for rural households.",
+    primaryCtaLabel: "Donate Now",
+    primaryCtaHref: "/get-involved#donate",
+    secondaryCtaLabel: "Our Mission",
+    secondaryCtaHref: "/about",
+    backgroundImage: null,
+    backgroundImageAlt: "A farmer tending to young fruit trees planted alongside crop rows in an agroforestry field.",
+  },
+  {
+    id: "5",
+    order: 5,
+    eyebrow: "Water Conservation",
+    headline: "Clearing Ponds,\nRestoring Life",
+    subheading:
+      "Choked, silted village ponds are desilted, deepened, and reopened — bringing back clean water for drinking, irrigation, and daily life to communities that once walked miles to fetch it.",
+    primaryCtaLabel: "Donate Now",
+    primaryCtaHref: "/get-involved#donate",
+    secondaryCtaLabel: "See Our Initiatives",
+    secondaryCtaHref: "/initiatives",
+    backgroundImage: null,
+    backgroundImageAlt: "A restored village pond with clear water, cleared of silt and water hyacinth.",
+  },
+  {
+    id: "6",
+    order: 6,
+    eyebrow: "Our Mission",
+    headline: "A Greener Planet\nStarts With Us",
+    subheading:
+      "Reforestation, clean water, and quality education aren't separate goals — they're one connected mission to heal the land and lift the communities who depend on it. Join us.",
+    primaryCtaLabel: "Donate Now",
+    primaryCtaHref: "/get-involved#donate",
+    secondaryCtaLabel: "Get Involved",
+    secondaryCtaHref: "/get-involved",
+    backgroundImage: "/images/hero-placeholder.jpg",
+    backgroundImageAlt: "A wide view of a restored green landscape representing Ichhe Puran's environmental mission.",
+  },
+];
+
+export const heroCarouselSettingsMock: HeroCarouselSettings = {
+  indicatorStyle: "dot",
+  gradientOverlay: true,
 };
 
 export const impactStatsMock: ImpactStat[] = [
