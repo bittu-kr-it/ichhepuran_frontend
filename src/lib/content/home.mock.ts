@@ -11,6 +11,8 @@ const communityCategory: Category = { slug: "community", name: "Community", colo
 
 export const siteSettingsMock: SiteSettings = {
   orgName: "Ichhe Puran",
+  orgLogo: "",
+  logoAlt: "Ichhe Puran logo",
   tagline:
     "Nurturing nature, restoring ecosystems, and empowering communities through transparent philanthropy.",
   phone: "+91 98300 12345",

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Globe, Mail, MapPin, Phone } from "lucide-react";
 import type { SiteSettings } from "@/lib/types";
@@ -23,9 +24,20 @@ export default async function Footer({ settings }: { settings: SiteSettings }) {
       <div className="mx-auto max-w-7xl px-6 lg:px-16">
         <div className="grid gap-10 md:grid-cols-4">
           <div className="md:col-span-2">
-            <p className="font-display text-xl font-semibold text-white">
-              {settings.orgName}
-            </p>
+            <div className="flex items-center gap-3">
+              {settings.orgLogo ? (
+                <Image
+                  src={settings.orgLogo}
+                  alt={settings.logoAlt ?? `${settings.orgName} logo`}
+                  width={42}
+                  height={42}
+                  className="h-10 w-10 object-contain"
+                />
+              ) : null}
+              <p className="font-display text-xl font-semibold text-white">
+                {settings.orgName}
+              </p>
+            </div>
             <p className="mt-3 max-w-sm text-sm leading-relaxed">
               {settings.tagline}
             </p>

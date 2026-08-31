@@ -10,6 +10,8 @@ export interface NavLink {
 
 export interface SiteSettings {
   orgName: string;
+  orgLogo?: string;
+  logoAlt?: string;
   tagline: string;
   phone: string;
   email: string;
@@ -34,6 +36,7 @@ export interface HeroContent {
 export interface ImpactStat {
   id: string;
   label: string;
+  prefix?: string;
   value: number;
   suffix?: string; // e.g. "+"
   icon: string; // lucide-react icon name

@@ -7,7 +7,7 @@ import type { LucideIcon } from "lucide-react";
 import type { ImpactStat } from "@/lib/types";
 import BlobAccent from "@/components/ui/BlobAccent";
 
-function Counter({ value, suffix }: { value: number; suffix?: string }) {
+function Counter({ value, prefix, suffix }: { value: number; prefix?: string; suffix?: string }) {
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
   const [display, setDisplay] = useState(0);
@@ -29,6 +29,7 @@ function Counter({ value, suffix }: { value: number; suffix?: string }) {
 
   return (
     <span ref={ref}>
+      {prefix}
       {display.toLocaleString("en-IN")}
       {suffix}
     </span>
@@ -61,7 +62,7 @@ export default function ImpactStats({ stats }: { stats: ImpactStat[] }) {
                 <Icon className="h-6 w-6 text-mustard" strokeWidth={1.75} />
               </span>
               <span className="mt-4 font-display text-4xl font-bold text-white">
-                <Counter value={stat.value} suffix={stat.suffix} />
+                <Counter value={stat.value} prefix={stat.prefix} suffix={stat.suffix} />
               </span>
               <span className="mt-2 text-xs font-medium uppercase tracking-wide leading-snug text-white/70">
                 {stat.label}

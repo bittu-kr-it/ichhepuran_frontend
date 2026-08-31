@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
@@ -22,9 +23,19 @@ export default function Navbar({ settings }: { settings: SiteSettings }) {
     <header className="sticky top-0 z-50 border-b border-black/5 bg-white/95 shadow-sm backdrop-blur">
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-16">
         <Link href="/" className="flex items-center gap-2">
-          <span className="flex h-9 w-9 items-center justify-center rounded-full bg-forest/10">
-            <Leaf className="h-5 w-5 text-forest" strokeWidth={2} />
-          </span>
+          {settings.orgLogo ? (
+            <Image
+              src={settings.orgLogo}
+              alt={settings.logoAlt ?? `${settings.orgName} logo`}
+              width={36}
+              height={36}
+              className="h-9 w-9 object-contain"
+            />
+          ) : (
+            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-forest/10">
+              <Leaf className="h-5 w-5 text-forest" strokeWidth={2} />
+            </span>
+          )}
           <span className="font-display text-2xl font-semibold text-forest">
             {settings.orgName}
           </span>
@@ -38,15 +49,13 @@ export default function Navbar({ settings }: { settings: SiteSettings }) {
                 <Link
                   href={link.href}
                   aria-current={active ? "page" : undefined}
-                  className={`group relative text-[15px] font-medium transition-colors hover:text-forest ${
-                    active ? "text-forest" : "text-charcoal"
-                  }`}
+                  className={`group relative text-[15px] font-medium transition-colors hover:text-forest ${active ? "text-forest" : "text-charcoal"
+                    }`}
                 >
                   {link.label}
                   <span
-                    className={`absolute -bottom-1 left-0 h-0.5 bg-mustard transition-all duration-300 ${
-                      active ? "w-full" : "w-0 group-hover:w-full"
-                    }`}
+                    className={`absolute -bottom-1 left-0 h-0.5 bg-mustard transition-all duration-300 ${active ? "w-full" : "w-0 group-hover:w-full"
+                      }`}
                   />
                 </Link>
               </li>
@@ -91,9 +100,8 @@ export default function Navbar({ settings }: { settings: SiteSettings }) {
                       <Link
                         href={link.href}
                         aria-current={active ? "page" : undefined}
-                        className={`block text-[15px] font-medium ${
-                          active ? "text-forest" : "text-charcoal"
-                        }`}
+                        className={`block text-[15px] font-medium ${active ? "text-forest" : "text-charcoal"
+                          }`}
                         onClick={() => setOpen(false)}
                       >
                         {link.label}
