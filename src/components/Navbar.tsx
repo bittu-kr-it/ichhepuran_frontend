@@ -19,6 +19,11 @@ export default function Navbar({ settings }: { settings: SiteSettings }) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
 
+  // The API can return donateHref as null (admin hasn't set it yet) even
+  // though the type says string — fall back so the "Donate Now" button
+  // never renders a null href into <Link>.
+  const donateHref = settings.donateHref || "/get-involved#donate";
+
   return (
     <header className="sticky top-0 z-50 border-b border-black/5 bg-white/95 shadow-sm backdrop-blur">
       {/* Fixed height (not padding-driven) so Hero's viewport-height calc
@@ -66,7 +71,7 @@ export default function Navbar({ settings }: { settings: SiteSettings }) {
         </ul>
 
         <Button
-          href={settings.donateHref}
+          href={donateHref}
           size="sm"
           className="hidden md:inline-block"
         >
@@ -112,7 +117,7 @@ export default function Navbar({ settings }: { settings: SiteSettings }) {
                   );
                 })}
               </ul>
-              <Button href={settings.donateHref} size="sm" className="mt-4 block">
+              <Button href={donateHref} size="sm" className="mt-4 block">
                 Donate Now
               </Button>
             </div>

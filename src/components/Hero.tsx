@@ -23,9 +23,14 @@ const TRANSITION_DURATION = 0.7;
 export default function Hero({
   slides,
   settings,
+  renderFirstSlideAsH1 = true,
 }: {
   slides: HeroSlide[];
   settings: HeroCarouselSettings;
+  // The first slide (by order) normally renders the page's single <h1>.
+  // Set false when the video hero above the carousel already owns the
+  // <h1> (see page.tsx) — the first slide then uses <p> like the rest.
+  renderFirstSlideAsH1?: boolean;
 }) {
   const sortedSlides = [...slides].sort((a, b) => a.order - b.order);
   const firstSlideId = sortedSlides[0]?.id;
@@ -144,11 +149,11 @@ export default function Hero({
       {settings.gradientOverlay && (
         <>
           <div
-            className="absolute inset-0 bg-gradient-to-r from-forest-dark/85 via-forest-dark/60 to-forest-dark/30"
+            className="absolute inset-0 bg-linear-to-r from-forest-dark/85 via-forest-dark/60 to-forest-dark/30"
             aria-hidden
           />
           <div
-            className="absolute inset-0 bg-gradient-to-t from-forest-dark/70 via-transparent to-transparent"
+            className="absolute inset-0 bg-linear-to-t from-forest-dark/70 via-transparent to-transparent"
             aria-hidden
           />
         </>
@@ -181,7 +186,7 @@ export default function Hero({
                   {slide.eyebrow}
                 </Eyebrow>
 
-                {isFirstSlide ? (
+                {isFirstSlide && renderFirstSlideAsH1 ? (
                   <h1 className="mt-4 whitespace-pre-line font-display text-4xl font-black leading-[1.08] text-white sm:text-5xl lg:mt-6 lg:text-7xl">
                     {slide.headline}
                   </h1>

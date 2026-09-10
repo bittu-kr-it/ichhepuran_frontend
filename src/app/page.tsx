@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import VideoHero from "@/components/VideoHero";
 import Hero from "@/components/Hero";
 import ImpactStats from "@/components/ImpactStats";
 import CorePillars from "@/components/CorePillars";
@@ -9,6 +10,7 @@ import {
   getCta,
   getHeroCarouselSettings,
   getHeroSlides,
+  getHomeVideoHero,
   getImpactStats,
   getPillars,
   getSdgAlignments,
@@ -25,13 +27,22 @@ import { buildPageMetadata } from "@/lib/seo";
 // order) — the same slide that renders as the page's one <h1> — not a new
 // hardcoded string.
 export async function generateMetadata(): Promise<Metadata> {
-  const [seo, heroSlides] = await Promise.all([getSeoSetting("home"), getHeroSlides()]);
+  const [seo, heroSlides, videoHero] = await Promise.all([
+    getSeoSetting("home"),
+    getHeroSlides(),
+    getHomeVideoHero(),
+  ]);
   const firstSlide = [...heroSlides].sort((a, b) => a.order - b.order)[0];
+  // When the video hero is enabled it's the top of the page, so its copy is
+  // the better fallback for description/share image; otherwise fall back to
+  // the carousel's first slide (the one that renders the <h1>).
+  const useVideo = videoHero.enabled;
   return buildPageMetadata({
     seo,
     path: "/",
-    fallbackDescription: firstSlide?.subheading ?? "",
-    fallbackImage: firstSlide?.backgroundImage,
+    fallbackDescription:
+      (useVideo ? videoHero.subheading : firstSlide?.subheading) ?? firstSlide?.subheading ?? "",
+    fallbackImage: (useVideo ? videoHero.poster : firstSlide?.backgroundImage) ?? firstSlide?.backgroundImage,
   });
 }
 
@@ -43,6 +54,7 @@ export async function generateMetadata(): Promise<Metadata> {
 // /home payload. Navbar/Footer live in the root layout, not here.
 export default async function Home() {
   const [
+    videoHero,
     heroSlides,
     heroCarouselSettings,
     impactStats,
@@ -54,6 +66,7 @@ export default async function Home() {
     sdgHeading,
     cta,
   ] = await Promise.all([
+    getHomeVideoHero(),
     getHeroSlides(),
     getHeroCarouselSettings(),
     getImpactStats(),
@@ -66,9 +79,18 @@ export default async function Home() {
     getCta(),
   ]);
 
+  // The video hero, when enabled with a headline, owns the page's <h1> —
+  // so the carousel's first slide steps down to <p> to keep exactly one.
+  const videoHeroOwnsH1 = videoHero.enabled && !!videoHero.headline;
+
   return (
     <main>
-      <Hero slides={heroSlides} settings={heroCarouselSettings} />
+      <VideoHero content={videoHero} />
+      <Hero
+        slides={heroSlides}
+        settings={heroCarouselSettings}
+        renderFirstSlideAsH1={!videoHeroOwnsH1}
+      />
       <ImpactStats stats={impactStats} />
       <CorePillars pillars={pillars} heading={pillarsHeading} />
       <Testimonials items={testimonials} heading={testimonialsHeading} />

@@ -1,4 +1,4 @@
-import type { Category, CtaContent, HeroCarouselSettings, HeroSlide, ImpactStat, Pillar, SectionHeading, SiteSettings, Testimonial } from "../types";
+import type { Category, CtaContent, HeroCarouselSettings, HeroSlide, HomeVideoHeroContent, ImpactStat, Pillar, SectionHeading, SiteSettings, Testimonial } from "../types";
 
 const environmentCategory: Category = { slug: "environment", name: "Environment", color: "forest", order: 1 };
 const waterCategory: Category = { slug: "water", name: "Water", color: "sage", order: 2 };
@@ -128,6 +128,26 @@ export const heroSlidesMock: HeroSlide[] = [
 export const heroCarouselSettingsMock: HeroCarouselSettings = {
   indicatorStyle: "dot",
   gradientOverlay: true,
+};
+
+// Matches the seeded default (HomePageSeeder) — enabled: false, so the
+// video band renders nothing until an admin uploads a video and turns it
+// on from /admin/home-video-hero.
+export const homeVideoHeroMock: HomeVideoHeroContent = {
+  enabled: false,
+  eyebrow: "Our Mission",
+  headline: "Planting Joy, Nurturing Hope, Growing Futures",
+  subheading: "Empowering communities and restoring nature, one initiative at a time.",
+  video: null,
+  videoUrl: null,
+  poster: null,
+  posterAlt: null,
+  overlay: true,
+  ctas: [
+    { label: "Get Involved", href: "/get-involved" },
+    { label: "Donate", href: "/get-involved#donate" },
+    { label: "Explore our Programs", href: "/initiatives" },
+  ],
 };
 
 export const impactStatsMock: ImpactStat[] = [

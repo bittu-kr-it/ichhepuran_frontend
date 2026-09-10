@@ -42,6 +42,26 @@ export interface HeroSlide {
   backgroundImageAlt?: string;
 }
 
+/**
+ * Optional full-bleed video band shown ABOVE the hero carousel on the Home
+ * page (see VideoHero.tsx). `enabled` is the master switch — when false the
+ * whole section renders nothing. `video` is an uploaded file URL, `videoUrl`
+ * an external fallback (used only when `video` is null); `ctas` is already
+ * filtered server-side to 0–3 complete label+link pairs.
+ */
+export interface HomeVideoHeroContent {
+  enabled: boolean;
+  eyebrow: string | null;
+  headline: string | null;
+  subheading: string | null;
+  video: string | null;
+  videoUrl: string | null;
+  poster: string | null;
+  posterAlt: string | null;
+  overlay: boolean;
+  ctas: { label: string; href: string }[];
+}
+
 export type HeroIndicatorStyle = "circle" | "dot" | "dash" | "plant";
 
 /**

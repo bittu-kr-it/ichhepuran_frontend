@@ -19,6 +19,7 @@ import type {
   GetInvolvedHeroContent,
   HeroCarouselSettings,
   HeroSlide,
+  HomeVideoHeroContent,
   ImpactHeroContent,
   ImpactStat,
   Initiative,
@@ -95,6 +96,14 @@ export async function getHeroSlides(): Promise<HeroSlide[]> {
     return heroSlidesMock;
   }
   return fetchJson<HeroSlide[]>("/hero-slides");
+}
+
+export async function getHomeVideoHero(): Promise<HomeVideoHeroContent> {
+  if (!API_BASE) {
+    const { homeVideoHeroMock } = await import("./content/home.mock");
+    return homeVideoHeroMock;
+  }
+  return fetchJson<HomeVideoHeroContent>("/home-video-hero");
 }
 
 export async function getHeroCarouselSettings(): Promise<HeroCarouselSettings> {
