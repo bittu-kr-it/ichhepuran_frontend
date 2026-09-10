@@ -5,6 +5,7 @@ import GeographicReachSection from "@/components/GeographicReachSection";
 import JourneyTimeline from "@/components/JourneyTimeline";
 import TeamGrid from "@/components/TeamGrid";
 import TrustBadgesSection from "@/components/TrustBadgesSection";
+import PartnersSection from "@/components/PartnersSection";
 import CtaBand from "@/components/CtaBand";
 import {
   getAboutHero,
@@ -12,6 +13,7 @@ import {
   getAboutMilestones,
   getCta,
   getGeographicReach,
+  getPartners,
   getSectionHeading,
   getSeoSetting,
   getTeamMembers,
@@ -54,6 +56,9 @@ export default async function About() {
     teamHeading,
     badges,
     badgesHeading,
+    partners,
+    partnersPartnershipHeading,
+    partnersImplementedForHeading,
     cta,
   ] = await Promise.all([
     getAboutHero(),
@@ -66,6 +71,9 @@ export default async function About() {
     getSectionHeading("team"),
     getTrustBadges(),
     getSectionHeading("trust-badges"),
+    getPartners(),
+    getSectionHeading("partners-partnership"),
+    getSectionHeading("partners-implemented-for"),
     getCta(),
   ]);
 
@@ -77,6 +85,11 @@ export default async function About() {
       <JourneyTimeline items={milestones} heading={milestonesHeading} />
       <TeamGrid members={team} heading={teamHeading} />
       <TrustBadgesSection badges={badges} heading={badgesHeading} />
+      <PartnersSection
+        partners={partners}
+        partnershipHeading={partnersPartnershipHeading}
+        implementedForHeading={partnersImplementedForHeading}
+      />
       <CtaBand content={cta} />
     </main>
   );

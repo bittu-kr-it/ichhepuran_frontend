@@ -5,6 +5,7 @@ import ImpactStats from "@/components/ImpactStats";
 import CorePillars from "@/components/CorePillars";
 import Testimonials from "@/components/Testimonials";
 import SdgAlignmentSection from "@/components/SdgAlignmentSection";
+import PartnersSection from "@/components/PartnersSection";
 import CtaBand from "@/components/CtaBand";
 import {
   getCta,
@@ -12,6 +13,7 @@ import {
   getHeroSlides,
   getHomeVideoHero,
   getImpactStats,
+  getPartners,
   getPillars,
   getSdgAlignments,
   getSectionHeading,
@@ -64,6 +66,9 @@ export default async function Home() {
     testimonialsHeading,
     sdgs,
     sdgHeading,
+    partners,
+    partnersPartnershipHeading,
+    partnersImplementedForHeading,
     cta,
   ] = await Promise.all([
     getHomeVideoHero(),
@@ -76,6 +81,9 @@ export default async function Home() {
     getSectionHeading("testimonials"),
     getSdgAlignments(),
     getSectionHeading("sdg-alignment"),
+    getPartners(),
+    getSectionHeading("partners-partnership"),
+    getSectionHeading("partners-implemented-for"),
     getCta(),
   ]);
 
@@ -95,6 +103,11 @@ export default async function Home() {
       <CorePillars pillars={pillars} heading={pillarsHeading} />
       <Testimonials items={testimonials} heading={testimonialsHeading} />
       <SdgAlignmentSection items={sdgs} heading={sdgHeading} />
+      <PartnersSection
+        partners={partners}
+        partnershipHeading={partnersPartnershipHeading}
+        implementedForHeading={partnersImplementedForHeading}
+      />
       <CtaBand content={cta} />
     </main>
   );

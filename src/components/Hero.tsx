@@ -89,7 +89,7 @@ export default function Hero({
       // h-20 (see Navbar.tsx) so this fills exactly what's left below it.
       // max(..., 34rem) is a floor for very short/landscape viewports so
       // text and controls never get crushed.
-      className="relative isolate min-h-[max(34rem,calc(100dvh-5rem))] overflow-hidden bg-sage"
+      className="relative isolate min-h-[max(34rem,calc(100dvh))] overflow-hidden bg-sage"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
       onFocus={() => setIsPaused(true)}
@@ -187,9 +187,9 @@ export default function Hero({
                 </Eyebrow>
 
                 {isFirstSlide && renderFirstSlideAsH1 ? (
-                  <h1 className="mt-4 whitespace-pre-line font-display text-4xl font-black leading-[1.08] text-white sm:text-5xl lg:mt-6 lg:text-7xl">
+                  <p className="mt-4 whitespace-pre-line font-display text-4xl font-black leading-[1.08] text-white sm:text-5xl lg:mt-6 lg:text-7xl">
                     {slide.headline}
-                  </h1>
+                  </p>
                 ) : (
                   <p className="mt-4 whitespace-pre-line font-display text-4xl font-black leading-[1.08] text-white sm:text-5xl lg:mt-6 lg:text-7xl">
                     {slide.headline}

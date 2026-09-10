@@ -1,4 +1,4 @@
-import type { Category, CtaContent, HeroCarouselSettings, HeroSlide, HomeVideoHeroContent, ImpactStat, Pillar, SectionHeading, SiteSettings, Testimonial } from "../types";
+import type { Category, CtaContent, HeroCarouselSettings, HeroSlide, HomeVideoHeroContent, ImpactStat, Partner, Pillar, SectionHeading, SiteSettings, Testimonial } from "../types";
 
 const environmentCategory: Category = { slug: "environment", name: "Environment", color: "forest", order: 1 };
 const waterCategory: Category = { slug: "water", name: "Water", color: "sage", order: 2 };
@@ -216,10 +216,25 @@ export const testimonialsMock: Testimonial[] = [
   },
 ];
 
+// Mirrors HomePageSeeder's Partner rows — logos are null (an admin uploads
+// them at /admin/partners), so mock mode shows the name-only fallback.
+export const partnersMock: Partner[] = [
+  { id: "1", name: "Grow Billion Trees", group: "partnership", logo: null, logoAlt: "Grow Billion Trees", order: 1 },
+  { id: "2", name: "Tega Industries", group: "partnership", logo: null, logoAlt: "Tega Industries", order: 2 },
+  { id: "3", name: "Calcutta Newbies Rotary Club", group: "partnership", logo: null, logoAlt: "Calcutta Newbies Rotary Club", order: 3 },
+  { id: "4", name: "Calcutta International School", group: "partnership", logo: null, logoAlt: "Calcutta International School", order: 4 },
+  { id: "5", name: "Kolkata Knight Riders", group: "implemented_for", logo: null, logoAlt: "Kolkata Knight Riders", order: 1 },
+  { id: "6", name: "Lions Clubs International", group: "implemented_for", logo: null, logoAlt: "Lions Clubs International", order: 2 },
+];
+
 export const ctaMock: CtaContent = {
   heading: "Join the Movement for a Greener Planet",
   subheading:
     "Your contribution directly funds the planting of saplings, the education of children, and the restoration of our precious ecosystems. Every wish matters.",
+  background: null,
+  backgroundAlt: null,
+  overlay: true,
+  textColor: null,
   primaryCtaLabel: "Donate Now",
   primaryCtaHref: "/get-involved#donate",
   secondaryCtaLabel: "Volunteer",
@@ -252,4 +267,6 @@ export const sectionHeadingsMock: Record<string, SectionHeading> = {
   "donation-methods": { eyebrow: "Ways to give", heading: "Choose How to Give" },
   volunteer: { eyebrow: "Give your time", heading: "Volunteer With Us" },
   "csr-partnership": { eyebrow: "Partner with purpose", heading: "CSR & Corporate Partnerships" },
+  "partners-partnership": { eyebrow: "Partners", heading: "In partnership with" },
+  "partners-implemented-for": { eyebrow: "Partners", heading: "Project implemented for" },
 };

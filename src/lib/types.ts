@@ -120,6 +120,13 @@ export interface Testimonial {
 export interface CtaContent {
   heading: string;
   subheading: string;
+  // Optional full-bleed background photo for the band; `overlay` toggles
+  // the darkening gradient that keeps the white text readable over it.
+  background: string | null;
+  backgroundAlt: string | null;
+  overlay: boolean;
+  // Hex colour for the heading + subheading. null = white (the default).
+  textColor: string | null;
   primaryCtaLabel: string;
   primaryCtaHref: string;
   secondaryCtaLabel: string;
@@ -131,6 +138,23 @@ export interface SectionHeading {
   heading: string;
   image?: string;
   imageAlt?: string;
+}
+
+export type PartnerGroup = "partnership" | "implemented_for";
+
+/**
+ * One logo in the Partners section (PartnersSection.tsx — renders on Home
+ * and About). `group` picks which of the two labelled rows it belongs to
+ * (the row titles are editable SectionHeadings, fetched separately).
+ * `logo` can be null (row seeded without an image yet).
+ */
+export interface Partner {
+  id: string;
+  name: string;
+  group: PartnerGroup;
+  logo: string | null;
+  logoAlt: string;
+  order: number;
 }
 
 export interface AboutHeroContent {

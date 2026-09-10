@@ -27,6 +27,7 @@ import type {
   LegalPage,
   LegalPageSummary,
   NewsletterSubscribePayload,
+  Partner,
   Pillar,
   SdgAlignment,
   SectionHeading,
@@ -144,6 +145,16 @@ export async function getCta(): Promise<CtaContent> {
     return ctaMock;
   }
   return fetchJson<CtaContent>("/cta-band");
+}
+
+// Renders on both Home and About — the mock lives in home.mock.ts, same as
+// getCta above (another cross-page section).
+export async function getPartners(): Promise<Partner[]> {
+  if (!API_BASE) {
+    const { partnersMock } = await import("./content/home.mock");
+    return partnersMock;
+  }
+  return fetchJson<Partner[]>("/partners");
 }
 
 export async function getSectionHeading(key: string): Promise<SectionHeading> {

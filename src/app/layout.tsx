@@ -30,15 +30,31 @@ const inter = localFont({
 // just a relative path ("/", "/about") — Next resolves the absolute
 // canonical URL from this automatically, which is what "auto-generated on
 // the frontend" means in practice: no canonical URL is ever stored in the CMS.
-export const metadata: Metadata = {
-  metadataBase: getSiteUrl(),
-  title: {
-    template: "%s | Ichhe Puran",
-    default: "Ichhe Puran | Restoring Earth, Empowering Communities",
-  },
-  description:
-    "Ichhe Puran restores ecosystems and empowers coastal and rural communities across eastern India through reforestation, water conservation, and education.",
-};
+//
+// generateMetadata (not a static object) so the favicon can follow the logo
+// uploaded in the CMS (SiteSettings → Branding). getSiteSettings() is deduped
+// by Next's fetch cache — calling it here and in RootLayout is one request.
+// Falls back to the bundled app/favicon.ico when no logo is set.
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await getSiteSettings();
+
+  return {
+    metadataBase: getSiteUrl(),
+    title: {
+      template: "%s | Ichhe Puran",
+      default: "Ichhe Puran | Restoring Earth, Empowering Communities",
+    },
+    description:
+      "Ichhe Puran restores ecosystems and empowers coastal and rural communities across eastern India through reforestation, water conservation, and education.",
+    icons: settings.orgLogo
+      ? {
+          icon: [{ url: settings.orgLogo }],
+          shortcut: [{ url: settings.orgLogo }],
+          apple: [{ url: settings.orgLogo }],
+        }
+      : undefined,
+  };
+}
 
 // Navbar and Footer are genuinely global chrome — fetched once here rather
 // than duplicated in every page.tsx (each of which used to fetch the same
