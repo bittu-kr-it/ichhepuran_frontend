@@ -160,6 +160,9 @@ export interface Partner {
 export interface AboutHeroContent {
   headline: string;
   subheading: string;
+  backgroundImage?: string | null;
+  textAlignment?: "left" | "center" | "right";
+  showGlassmorphismButton?: boolean;
 }
 
 export interface AboutIntroContent {
@@ -210,6 +213,9 @@ export interface TrustBadge {
 export interface InitiativesHeroContent {
   headline: string;
   subheading: string;
+  backgroundImage?: string | null;
+  textAlignment?: "left" | "center" | "right";
+  showGlassmorphismButton?: boolean;
 }
 
 /**
@@ -251,6 +257,9 @@ export interface Initiative {
 export interface ImpactHeroContent {
   headline: string;
   subheading: string;
+  backgroundImage?: string | null;
+  textAlignment?: "left" | "center" | "right";
+  showGlassmorphismButton?: boolean;
 }
 
 /**
@@ -297,6 +306,9 @@ export interface CarbonStat {
 export interface GalleryHeroContent {
   headline: string;
   subheading: string;
+  backgroundImage?: string | null;
+  textAlignment?: "left" | "center" | "right";
+  showGlassmorphismButton?: boolean;
 }
 
 /**
@@ -323,11 +335,17 @@ export interface GalleryItem {
 export interface GetInvolvedHeroContent {
   headline: string;
   subheading: string;
+  backgroundImage?: string | null;
+  textAlignment?: "left" | "center" | "right";
+  showGlassmorphismButton?: boolean;
 }
 
 export interface ContactHeroContent {
   headline: string;
   subheading: string;
+  backgroundImage?: string | null;
+  textAlignment?: "left" | "center" | "right";
+  showGlassmorphismButton?: boolean;
 }
 
 /**
