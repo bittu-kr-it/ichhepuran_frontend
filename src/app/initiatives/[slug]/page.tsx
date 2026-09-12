@@ -8,7 +8,12 @@ import type { LucideIcon } from "lucide-react";
 import { getCategoryColorClasses } from "@/lib/categoryColors";
 import CtaBand from "@/components/CtaBand";
 import Reveal from "@/components/ui/Reveal";
-import { getCta, getInitiative } from "@/lib/api";
+import { getCta, getInitiative, getInitiatives } from "@/lib/api";
+
+export async function generateStaticParams() {
+  const initiatives = await getInitiatives();
+  return initiatives.map((initiative) => ({ slug: initiative.id }));
+}
 
 // Genuinely unique per-initiative metadata (title, description, and a real
 // social-share image when one's been uploaded) — the highest-value case for

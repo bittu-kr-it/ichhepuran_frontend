@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { getInitiatives, getLegalPages } from "@/lib/api";
 import { getSiteUrl } from "@/lib/siteUrl";
 
-export const revalidate = 60;
+export const dynamic = "force-static";
 
 const staticRoutes: Array<{
   path: string;

@@ -3,7 +3,12 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import Reveal from "@/components/ui/Reveal";
-import { getLegalPage } from "@/lib/api";
+import { getLegalPage, getLegalPages } from "@/lib/api";
+
+export async function generateStaticParams() {
+  const pages = await getLegalPages();
+  return pages.map((page) => ({ slug: page.slug }));
+}
 
 // Root-level dynamic route so legal page URLs are clean (/privacy-policy,
 // not /legal/privacy-policy). Next.js always resolves an explicit static
