@@ -1,4 +1,10 @@
 import type { NextConfig } from "next";
+import dns from "node:dns";
+
+// The backend host advertises an AAAA (IPv6) record that isn't actually
+// reachable. Node's fetch tries that first and hangs until Vercel's build
+// times out ("fetch failed" / ETIMEDOUT) — forcing IPv4 first avoids it.
+dns.setDefaultResultOrder("ipv4first");
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 const mediaOrigin = apiUrl ? new URL(apiUrl) : undefined;
