@@ -47,13 +47,44 @@ import type {
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL;
 
+// The shared-hosting backend's PHP-FPM pool is small enough that a static
+// export build — which fires many of these concurrently across pages —
+// occasionally overwhelms it and a request 500s transiently. A short retry
+// clears that up without weakening the real error path for a genuine
+// failure (which still throws after these attempts are exhausted).
+const FETCH_RETRIES = 4;
+const RETRY_DELAY_MS = 1500;
+
+// Shared by fetchJson and the two "return null on 404" lookups below, so
+// every read endpoint gets the same transient-500 retry.
+async function fetchWithRetry(path: string): Promise<Response> {
+  let lastError: unknown;
+  for (let attempt = 0; attempt <= FETCH_RETRIES; attempt++) {
+    if (attempt > 0) {
+      await new Promise((resolve) => setTimeout(resolve, RETRY_DELAY_MS * attempt));
+    }
+    try {
+      const res = await fetch(`${API_BASE}${path}`, {
+        // ISR: re-check with the CMS at most once a minute. The Laravel backend
+        // can also call Next.js's on-demand revalidation webhook on publish for
+        // instant updates (see project doc, Section 6 — System Architecture).
+        next: { revalidate: 60 },
+      });
+      if (res.status >= 500 && attempt < FETCH_RETRIES) {
+        lastError = new Error(`API request failed: ${path} (${res.status})`);
+        continue;
+      }
+      return res;
+    } catch (err) {
+      lastError = err;
+      if (attempt >= FETCH_RETRIES) throw err;
+    }
+  }
+  throw lastError;
+}
+
 async function fetchJson<T>(path: string): Promise<T> {
-  const res = await fetch(`${API_BASE}${path}`, {
-    // ISR: re-check with the CMS at most once a minute. The Laravel backend
-    // can also call Next.js's on-demand revalidation webhook on publish for
-    // instant updates (see project doc, Section 6 — System Architecture).
-    next: { revalidate: 60 },
-  });
+  const res = await fetchWithRetry(path);
   if (!res.ok) {
     throw new Error(`API request failed: ${path} (${res.status})`);
   }
@@ -237,9 +268,7 @@ export async function getInitiative(slug: string): Promise<Initiative | null> {
     const { initiativesMock } = await import("./content/initiatives.mock");
     return initiativesMock.find((initiative) => initiative.id === slug) ?? null;
   }
-  const res = await fetch(`${API_BASE}/initiatives/${slug}`, {
-    next: { revalidate: 60 },
-  });
+  const res = await fetchWithRetry(`/initiatives/${slug}`);
   if (res.status === 404) return null;
   if (!res.ok) {
     throw new Error(`API request failed: /initiatives/${slug} (${res.status})`);
@@ -370,9 +399,7 @@ export async function getLegalPage(slug: string): Promise<LegalPage | null> {
     const { legalPagesMock } = await import("./content/legal.mock");
     return legalPagesMock.find((page) => page.slug === slug) ?? null;
   }
-  const res = await fetch(`${API_BASE}/legal-pages/${slug}`, {
-    next: { revalidate: 60 },
-  });
+  const res = await fetchWithRetry(`/legal-pages/${slug}`);
   if (res.status === 404) return null;
   if (!res.ok) {
     throw new Error(`API request failed: /legal-pages/${slug} (${res.status})`);
