@@ -7,11 +7,12 @@ const nextConfig: NextConfig = {
   output: "export", // <-- Static HTML export generate karne ke liye
 
   experimental: {
-    // The backend runs on shared hosting with a small PHP-FPM pool. The
-    // default worker count (cpus - 1) fires enough concurrent build-time
-    // fetches to overwhelm it and get transient 500s. A low, fixed number
-    // keeps this build gentle on it regardless of the machine it runs on.
-    cpus: 2,
+    // The backend runs on shared hosting with a small PHP-FPM pool and a
+    // permanently high load average. The default worker count (cpus - 1)
+    // fires enough concurrent build-time fetches to overwhelm it and get
+    // transient 500s. 1 keeps this build fully sequential and as gentle
+    // on it as possible, regardless of the machine it runs on.
+    cpus: 1,
   },
 
   images: {

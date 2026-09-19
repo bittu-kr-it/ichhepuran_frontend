@@ -52,8 +52,8 @@ const API_BASE = process.env.NEXT_PUBLIC_API_URL;
 // occasionally overwhelms it and a request 500s transiently. A short retry
 // clears that up without weakening the real error path for a genuine
 // failure (which still throws after these attempts are exhausted).
-const FETCH_RETRIES = 4;
-const RETRY_DELAY_MS = 1500;
+const FETCH_RETRIES = 6;
+const RETRY_DELAY_MS = 2000;
 
 // Shared by fetchJson and the two "return null on 404" lookups below, so
 // every read endpoint gets the same transient-500 retry.
