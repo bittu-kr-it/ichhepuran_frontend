@@ -1,16 +1,45 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { motion, useInView, useReducedMotion } from "framer-motion";
 import * as Icons from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import type { ImpactStat } from "@/lib/types";
 import BlobAccent from "@/components/ui/BlobAccent";
+import Reveal from "@/components/ui/Reveal";
 
+// Native IntersectionObserver + a timeout fallback, not framer-motion's
+// useInView — same reasoning as ui/Reveal.tsx: a report of this section
+// staying stuck (counters frozen at 0, in this component's case) for a
+// visitor scrolling normally wasn't reproducible in this project's own
+// dev/test browser, so the count-up shouldn't depend on one particular
+// animation library's observer wiring succeeding to ever run at all.
 function Counter({ value, prefix, suffix }: { value: number; prefix?: string; suffix?: string }) {
   const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
+  const [inView, setInView] = useState(false);
   const [display, setDisplay] = useState(0);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setInView(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "-80px 0px -80px 0px" }
+    );
+    observer.observe(el);
+
+    const fallback = setTimeout(() => setInView(true), 4000);
+
+    return () => {
+      observer.disconnect();
+      clearTimeout(fallback);
+    };
+  }, []);
 
   useEffect(() => {
     if (!inView) return;
@@ -38,7 +67,6 @@ function Counter({ value, prefix, suffix }: { value: number; prefix?: string; su
 
 export default function ImpactStats({ stats }: { stats: ImpactStat[] }) {
   const sorted = [...stats].sort((a, b) => a.order - b.order);
-  const shouldReduceMotion = useReducedMotion();
 
   return (
     <section className="relative overflow-hidden bg-forest py-20">
@@ -50,12 +78,9 @@ export default function ImpactStats({ stats }: { stats: ImpactStat[] }) {
           const Icon = (Icons[stat.icon as keyof typeof Icons] ??
             Icons.Sparkles) as LucideIcon;
           return (
-            <motion.div
+            <Reveal
               key={stat.id}
-              initial={shouldReduceMotion ? undefined : { opacity: 0, y: 16 }}
-              whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.5, delay: index * 0.08 }}
+              delay={index * 0.08}
               className="flex flex-col items-center border-white/10 px-2 text-center lg:border-l lg:first:border-l-0"
             >
               <span className="flex h-14 w-14 items-center justify-center rounded-full bg-white/10">
@@ -67,7 +92,7 @@ export default function ImpactStats({ stats }: { stats: ImpactStat[] }) {
               <span className="mt-2 text-xs font-medium uppercase tracking-wide leading-snug text-white/70">
                 {stat.label}
               </span>
-            </motion.div>
+            </Reveal>
           );
         })}
       </div>

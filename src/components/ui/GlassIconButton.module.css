@@ -1,0 +1,73 @@
+/*
+ * Frosted-glass floating icon button with an ambient pulsing glow, in the
+ * button's own brand color (passed in via the --glow-color custom
+ * property). Used for the floating WhatsApp/Call buttons — visually
+ * distinct from the e-book button's plant-pot hover effect
+ * (FloatingLeafButton), which keeps its own style unchanged.
+ *
+ * The glow is a `box-shadow` on the button itself, not a separate
+ * filter:blur()'d div — a blurred div's visual bleed extends well past its
+ * own box (unlike box-shadow, which clips to what you set), so an earlier
+ * version of this fogged up a large soft halo that washed out whatever
+ * page content sat behind/between the floating buttons. Keep the glow
+ * blur/spread numbers below small for the same reason.
+ */
+
+.wrap {
+  position: relative;
+  display: inline-flex;
+}
+
+.glass {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  color: #fff;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.35));
+  backdrop-filter: blur(10px) saturate(160%);
+  -webkit-backdrop-filter: blur(10px) saturate(160%);
+  background: linear-gradient(155deg, rgba(255, 255, 255, 0.42), rgba(255, 255, 255, 0.12));
+  border: 1.5px solid var(--glow-color);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.6),
+    inset 0 -6px 10px rgba(0, 0, 0, 0.12),
+    0 4px 10px rgba(0, 0, 0, 0.22),
+    0 0 8px 0px var(--glow-color);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  animation: glowPulse 2.6s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+  0%, 100% {
+    box-shadow:
+      inset 0 1px 1px rgba(255, 255, 255, 0.6),
+      inset 0 -6px 10px rgba(0, 0, 0, 0.12),
+      0 4px 10px rgba(0, 0, 0, 0.22),
+      0 0 6px 0px var(--glow-color);
+  }
+  50% {
+    box-shadow:
+      inset 0 1px 1px rgba(255, 255, 255, 0.6),
+      inset 0 -6px 10px rgba(0, 0, 0, 0.12),
+      0 4px 10px rgba(0, 0, 0, 0.22),
+      0 0 14px 2px var(--glow-color);
+  }
+}
+
+.wrap:hover .glass {
+  transform: scale(1.08);
+  animation-play-state: paused;
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.6),
+    inset 0 -6px 10px rgba(0, 0, 0, 0.12),
+    0 6px 14px rgba(0, 0, 0, 0.28),
+    0 0 18px 3px var(--glow-color);
+}
+
+.wrap:active .glass {
+  transform: scale(0.96);
+}

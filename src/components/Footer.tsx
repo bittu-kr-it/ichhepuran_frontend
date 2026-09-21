@@ -1,13 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Globe, Mail, MapPin, Phone } from "lucide-react";
+import { Mail, MapPin, Phone } from "lucide-react";
 import type { SiteSettings } from "@/lib/types";
 import NewsletterSignup from "@/components/NewsletterSignup";
+import SocialIcon from "@/components/ui/SocialIcon";
 import { getLegalPages } from "@/lib/api";
-
-// lucide-react dropped brand/logo icons (Facebook, Instagram, etc.) in
-// recent versions, so every social link gets the same generic globe icon —
-// the label is still shown via aria-label for screen readers.
 
 // Async server component — fetches its own legal-page links rather than
 // having every page that renders <Footer> thread an extra prop through.
@@ -51,7 +48,7 @@ export default async function Footer({ settings }: { settings: SiteSettings }) {
                     aria-label={social.label}
                     className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 transition-colors hover:bg-mustard hover:text-charcoal"
                   >
-                    <Globe className="h-4 w-4" strokeWidth={1.75} />
+                    <SocialIcon icon={social.icon} className="h-4 w-4" />
                   </Link>
                 ))}
               </div>

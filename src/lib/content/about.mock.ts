@@ -50,8 +50,8 @@ export const aboutMilestonesMock: AboutMilestone[] = [
 ];
 
 export const teamMembersMock: TeamMember[] = [
-  { id: "1", name: "Gargee Das Mondal", role: "Social Work", photoAlt: "Portrait of Gargee Das Mondal, Social Work.", order: 1 },
-  { id: "2", name: "Netai Mondal", role: "Post Treasurer & Senior Operations Manager", photoAlt: "Portrait of Netai Mondal, Post Treasurer & Senior Operations Manager.", order: 2 },
+  { id: "1", name: "Gargee Das Mondal", role: "Social Work", photoAlt: "Portrait of Gargee Das Mondal, Social Work.", group: "team", order: 1 },
+  { id: "2", name: "Netai Mondal", role: "Post Treasurer & Senior Operations Manager", photoAlt: "Portrait of Netai Mondal, Post Treasurer & Senior Operations Manager.", group: "team", order: 2 },
 ];
 
 export const trustBadgesMock: TrustBadge[] = [

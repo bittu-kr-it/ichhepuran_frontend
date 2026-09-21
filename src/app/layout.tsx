@@ -4,6 +4,7 @@ import "@/lib/ipv4Fetch";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import FloatingActions from "@/components/FloatingActions";
 import { getSiteSettings } from "@/lib/api";
 import { getSiteUrl } from "@/lib/siteUrl";
 
@@ -73,6 +74,7 @@ export default async function RootLayout({
         <Navbar settings={settings} />
         {children}
         <Footer settings={settings} />
+        <FloatingActions settings={settings} />
       </body>
     </html>
   );

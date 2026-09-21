@@ -19,9 +19,9 @@ export const siteSettingsMock: SiteSettings = {
   email: "info@ichhepuran.org",
   address: "12/A Green Avenue, Salt Lake City, Sector 5, Kolkata, West Bengal - 700091",
   socialLinks: [
-    { label: "Facebook", href: "#" },
-    { label: "Instagram", href: "#" },
-    { label: "YouTube", href: "#" },
+    { label: "Facebook", href: "#", icon: "Facebook" },
+    { label: "Instagram", href: "#", icon: "Instagram" },
+    { label: "YouTube", href: "#", icon: "YouTube" },
   ],
   navLinks: [
     { label: "Home", href: "/" },
@@ -32,6 +32,14 @@ export const siteSettingsMock: SiteSettings = {
     { label: "Contact", href: "/contact" },
   ],
   donateHref: "/get-involved#donate",
+  whatsappEnabled: true,
+  whatsappNumber: "919147708511",
+  whatsappMessage: "Hi! I'd like to know more about Ichhe Puran.",
+  ebookEnabled: true,
+  ebookLabel: "Download e-book",
+  ebookUrl: "#",
+  callEnabled: true,
+  callNumber: "+919147708511",
 };
 
 // Mirrors the real 6-slide carousel seeded by HomePageSeeder — mock mode is
@@ -256,6 +264,7 @@ export const sectionHeadingsMock: Record<string, SectionHeading> = {
   "geographic-reach": { eyebrow: "Where we work", heading: "Our Geographic Reach" },
   "about-milestones": { eyebrow: "Our journey", heading: "Milestones of Impact" },
   team: { eyebrow: "The people behind it", heading: "Meet Our Team" },
+  "advisory-board": { eyebrow: "Guiding our mission", heading: "Advisory Board" },
   "trust-badges": { eyebrow: "Transparency & trust", heading: "Certified & Accountable" },
   "impact-milestones": { eyebrow: "Our journey", heading: "Journey of Impact" },
   "impact-testimonials": { eyebrow: "Voices of impact", heading: "Faces of Impact" },

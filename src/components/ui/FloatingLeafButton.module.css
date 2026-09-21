@@ -1,0 +1,122 @@
+/*
+ * Adapted from a Uiverse.io button by MuhammadHasann (leaf-sprout hover
+ * effect) — https://uiverse.io — scaled down from a large marketing button
+ * to this site's small floating corner buttons, and recolored via
+ * LeafIcons.tsx to the forest-palette tokens instead of the original hex
+ * values.
+ *
+ * `.wrap` is a transparent positioning container (the actual <a>); `.pot`
+ * is the visible pill (background/padding come from Tailwind classes on
+ * it — see FloatingLeafButton.tsx). They're deliberately split: a stacking
+ * context's own background always paints BEHIND its z-index children
+ * (CSS2.1 Appendix E, painting order), so a leaf can never be hidden
+ * behind its own direct parent's background no matter what z-index you
+ * give it. Making `.pot` a later sibling with a higher z-index than the
+ * leaves is what lets its body actually cover each leaf's stem base —
+ * that's what makes the leaves read as sprouting from inside the pot
+ * instead of floating in front of it.
+ */
+
+.wrap {
+  position: relative;
+  /* Scopes .pot/.iconWrap's z-index to just this button (see file header)
+     instead of escaping to the shared `fixed` wrapper in FloatingActions,
+     where it could fight with sibling floating buttons' own z-index. */
+  z-index: 0;
+  display: inline-flex;
+}
+
+.pot {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border-radius: 10px;
+  transition: all 0.3s ease-in-out;
+}
+
+.wrap:hover .pot {
+  border-radius: 10px 10px 26px 26px;
+}
+
+.iconWrap {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  width: 0;
+  height: auto;
+  transition: all 0.5s ease-in-out;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.wrap:hover .iconWrap1 {
+  top: -95%;
+  left: 50%;
+  width: 22px;
+  animation: fly1 1s ease 0.45s forwards;
+}
+
+@keyframes fly1 {
+  0% { transform-origin: 0 100%; transform: translate(-50%, 0) rotate(0deg); }
+  25% { transform-origin: 0 100%; transform: translate(-50%, 0) rotate(5deg); }
+  50% { transform-origin: 0 100%; transform: translate(-50%, 0) rotate(1deg); }
+  65% { transform-origin: 0 100%; transform: translate(-50%, 0) rotate(3deg); }
+  100% { transform-origin: 0 100%; transform: translate(-50%, 0) rotate(0deg); }
+}
+
+.wrap:hover .iconWrap2 {
+  top: -80%;
+  left: 88%;
+  width: 32px;
+  animation: fly2 1s ease 0.45s forwards;
+}
+
+@keyframes fly2 {
+  0% { transform-origin: 0 100%; transform: translate(-50%, 0) rotate(0deg); }
+  35% { transform-origin: 0 100%; transform: translate(-50%, 0) rotate(10deg); }
+  50% { transform-origin: 0 100%; transform: translate(-50%, 0) rotate(4deg); }
+  80% { transform-origin: 0 100%; transform: translate(-50%, 0) rotate(5deg); }
+  100% { transform-origin: 0 100%; transform: translate(-50%, 0) rotate(0deg); }
+}
+
+.wrap:hover .iconWrap3 {
+  top: -50%;
+  left: 22%;
+  width: 24px;
+  animation: fly3 1s ease 0.45s forwards;
+}
+
+@keyframes fly3 {
+  0% { transform-origin: 0 100%; transform: translate(-50%, 0) rotate(0deg); }
+  35% { transform-origin: 0 100%; transform: translate(-50%, 0) rotate(-2deg); }
+  100% { transform-origin: 0 100%; transform: translate(-50%, 0) rotate(0deg); }
+}
+
+.wrap:hover .iconWrap4 {
+  top: -115%;
+  left: 12%;
+  width: 34px;
+  animation: fly4 1s ease 0.45s forwards;
+}
+
+@keyframes fly4 {
+  0% { transform-origin: 0 100%; transform: translate(-50%, 0) rotate(0deg); }
+  40% { transform-origin: 0 100%; transform: translate(-50%, 0) rotate(-3deg); }
+  100% { transform-origin: 0 100%; transform: translate(-50%, 0) rotate(0deg); }
+}
+
+.wrap:hover .iconWrap5 {
+  top: -135%;
+  left: 88%;
+  width: 34px;
+  animation: fly5 1s ease 0.45s forwards;
+}
+
+@keyframes fly5 {
+  0% { transform-origin: 0 100%; transform: translate(-50%, 0) rotate(0deg); }
+  35% { transform-origin: 0 100%; transform: translate(-50%, 0) rotate(-3deg); }
+  100% { transform-origin: 0 100%; transform: translate(-50%, 0) rotate(0deg); }
+}

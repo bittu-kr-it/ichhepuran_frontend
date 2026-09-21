@@ -54,6 +54,7 @@ export default async function About() {
     milestonesHeading,
     team,
     teamHeading,
+    advisoryBoardHeading,
     badges,
     badgesHeading,
     partners,
@@ -69,6 +70,7 @@ export default async function About() {
     getSectionHeading("about-milestones"),
     getTeamMembers(),
     getSectionHeading("team"),
+    getSectionHeading("advisory-board"),
     getTrustBadges(),
     getSectionHeading("trust-badges"),
     getPartners(),
@@ -83,7 +85,12 @@ export default async function About() {
       <OriginStory content={intro} />
       <GeographicReachSection items={reach} heading={reachHeading} />
       <JourneyTimeline items={milestones} heading={milestonesHeading} />
-      <TeamGrid members={team} heading={teamHeading} />
+      <TeamGrid members={team.filter((m) => m.group !== "advisory_board")} heading={teamHeading} />
+      <TeamGrid
+        members={team.filter((m) => m.group === "advisory_board")}
+        heading={advisoryBoardHeading}
+        background="cream"
+      />
       <TrustBadgesSection badges={badges} heading={badgesHeading} />
       <PartnersSection
         partners={partners}

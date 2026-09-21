@@ -13,17 +13,31 @@ function initials(name: string): string {
     .toUpperCase();
 }
 
+// Static class map, not a dynamic `bg-${x}` string — Tailwind v4 can't
+// resolve a dynamically-constructed class name at build time (same reason
+// as lib/categoryColors.ts). Lets two TeamGrid instances stacked back to
+// back (Team, then Advisory Board) alternate backgrounds instead of
+// merging into one undifferentiated block.
+const backgroundClasses = {
+  "pale-green": "bg-pale-green",
+  cream: "bg-cream",
+} as const;
+
 export default function TeamGrid({
   members,
   heading,
+  background = "pale-green",
 }: {
   members: TeamMember[];
   heading: SectionHeading;
+  background?: keyof typeof backgroundClasses;
 }) {
   const sorted = [...members].sort((a, b) => a.order - b.order);
 
+  if (sorted.length === 0) return null;
+
   return (
-    <section className="bg-pale-green py-24">
+    <section className={`${backgroundClasses[background]} py-24`}>
       <div className="mx-auto max-w-7xl px-6 lg:px-16">
         <Reveal className="max-w-2xl">
           <Eyebrow>{heading.eyebrow}</Eyebrow>

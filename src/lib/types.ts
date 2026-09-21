@@ -16,9 +16,17 @@ export interface SiteSettings {
   phone: string;
   email: string;
   address: string;
-  socialLinks: { label: string; href: string }[];
+  socialLinks: { label: string; href: string; icon?: string }[];
   navLinks: NavLink[];
   donateHref: string;
+  whatsappEnabled: boolean;
+  whatsappNumber?: string | null;
+  whatsappMessage?: string | null;
+  ebookEnabled: boolean;
+  ebookLabel?: string | null;
+  ebookUrl?: string | null;
+  callEnabled: boolean;
+  callNumber?: string | null;
 }
 
 /**
@@ -200,6 +208,7 @@ export interface TeamMember {
   bio?: string;
   photo?: string;
   photoAlt?: string;
+  group: "team" | "advisory_board";
   order: number;
 }
 
